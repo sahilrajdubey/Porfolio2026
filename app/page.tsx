@@ -5,18 +5,8 @@ import Image from 'next/image';
 export default function Home() {
   return (
     <main className="relative min-h-screen w-full overflow-hidden text-white selection:bg-white/20 cursor-crosshair">
-      {/* Static Background */}
-          <div>
-      <TargetCursor 
-        spinDuration={2}
-        hideDefaultCursor={true}
-        parallaxOn={true}
-      />
-      
-      <h1>Hover over the elements below</h1>
-      <button className="cursor-target">Click me!</button>
-      <div className="cursor-target">Hover target</div>
-    </div>
+
+
       <div className="fixed inset-0 z-0 select-none">
         <Image
           src="/image.jpg"
