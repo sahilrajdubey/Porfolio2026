@@ -1,7 +1,6 @@
 'use client';
-
 import Image from 'next/image';
-
+import TextType from '@/components/TextType';
 
 export default function Home() {
   return (
@@ -20,7 +19,7 @@ export default function Home() {
       </div>
 
 
-      <div className="relative z-10 w-full p-8 md:p-12 flex justify-between items-start font-cursive tracking-wide">
+      <div className="relative z-10 w-full p-8 md:p-12 flex justify-between items-start font-helvetica tracking-wide">
         <div className="flex items-center gap-6 md:gap-10 text-sm md:text-base font-medium text-black">
           Sahil Raj Dubey xD
         </div>
@@ -33,12 +32,12 @@ export default function Home() {
         </nav>
       </div>
 
-      {/* Main Text */}
-      <div className="absolute top-1/2 left-8 md:left-12 -translate-y-1/2 z-10 max-w-xl md:max-w-2xl text-black font-cursive leading-tight">
+    
+      <div className="absolute top-1/2 left-8 md:left-12 -translate-y-1/2 z-10 max-w-xl md:max-w-2xl text-black font-cursive tracking-wide leading-tight">
         <h1 className="text-4xl md:text-6xl lg:text-7xl mb-6">
-          I craft clean web designs,
+          I create clean web designs
           <br />
-          and efficiently manage data to build smooth, functional experiences.
+          and handle data efficiently.
         </h1>
       </div>
 
