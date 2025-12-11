@@ -1,8 +1,23 @@
 'use client';
 import Image from 'next/image';
 import { TypeAnimation } from 'react-type-animation';
+import LogoLoop from '@/components/LogoLoop';
+import { SiInstagram, SiGithub, SiLinkedin, SiDiscord, SiX } from 'react-icons/si';
 
 export default function Home() {
+    const socialLogos = [
+    { node: <SiInstagram color="#000000ff" />, title: "Instagram", href: "https://www.instagram.com/sahilrajdubey_" },
+    { node: <SiGithub color="#000000ff" />, title: "GitHub", href: "https://github.com/sahilrajdubey" },
+    { node: <SiLinkedin color="#000000ff" />, title: "LinkedIn", href: "https://www.linkedin.com/in/sahil-raj-dubey/" },
+    { node: <SiDiscord color="#000000ff" />, title: "Discord", href: "https://discord.gg/58uwPkFjJJ" },
+    { node: <SiX color="#000000ff" />, title: "Instagram", href: "https://x.com/" },
+    { node: <SiInstagram color="#000000ff" />, title: "Instagram", href: "https://www.instagram.com/sahilrajdubey_" },
+    { node: <SiGithub color="#040303ff" />, title: "GitHub", href: "https://github.com/sahilrajdubey" },
+    { node: <SiLinkedin color="#040303ff" />, title: "LinkedIn", href: "https://www.linkedin.com/in/sahil-raj-dubey/" },
+    { node: <SiDiscord color="#040303ff" />, title: "Discord", href: "https://discord.gg/UFqqTbqUzE" },
+    { node: <SiX color="#040303ff" />, title: "Instagram", href: "https://x.com/" },
+
+  ];
   return (
     <main className="relative min-h-screen w-full overflow-hidden text-white selection:bg-white/20 cursor-crosshair">
 
@@ -32,8 +47,11 @@ export default function Home() {
         </nav>
       </div>
 
-    
-      <div className="absolute top-80 left-8 md:left-12 -translate-y-1/2 z-10 max-w-xl md:max-w-2xl text-gray-700 font-bold font-cursive tracking-wide leading-tight">
+
+      <div className="absolute top-100 left-8 md:left-12 -translate-y-1/2 z-10 max-w-xl md:max-w-2xl text-gray-700 font-bold font-cursive tracking-wide leading-tight">
+            <h1 className="text-4xl md:text-1xl lg:text-4xl text-blue-800 mb-6">
+        @Hey , I'm Sahil Raj Dubey
+      </h1>
         <h1 className="text-4xl md:text-6xl lg:text-7xl mb-6">
           <TypeAnimation
             sequence={[
@@ -47,6 +65,32 @@ export default function Home() {
             repeat={1}
           />
         </h1>
+
+      </div>
+
+
+      <div className="absolute top-[calc(50%+15rem)] left-8 md:left-0 z-10 w-[calc(50%-4rem)]">
+        <div className="relative overflow-hidden">
+          {/* Left Fade overlay */}
+          <div className="absolute left-0 top-0 bottom-0 w-32 z-20 pointer-events-none"
+               style={{ background: 'linear-gradient(to right, rgba(255, 255, 255, 0.9) 0%, transparent 80%)' }} />
+          {/* Right Fade overlay */}
+          <div className="absolute right-0 top-0 bottom-0 w-32 z-20 pointer-events-none"
+               style={{ background: 'linear-gradient(to left, rgba(249, 249, 249, 0.96) 0%, transparent 80%)'  }} />
+        
+          <LogoLoop 
+          logos={socialLogos}
+          speed={110}
+          direction="left"
+          logoHeight={40}
+          gap={60}
+          hoverSpeed={0}
+          scaleOnHover
+          fadeOut={true}
+          fadeOutColor="rgba(0,0,0,0)"
+          ariaLabel="Social Media Links"
+          />
+        </div>
       </div>
 
 
