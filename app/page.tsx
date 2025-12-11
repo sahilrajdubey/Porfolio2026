@@ -1,6 +1,6 @@
 'use client';
 import Image from 'next/image';
-import TextType from '@/components/TextType';
+import { TypeAnimation } from 'react-type-animation';
 
 export default function Home() {
   return (
@@ -24,7 +24,7 @@ export default function Home() {
           Sahil Raj Dubey xD
         </div>
 
-        <nav className="flex items-center gap-6 md:gap-10 text-sm md:text-base font-medium text-black">
+        <nav className="flex items-center gap-6 md:gap-10 text-sm md:text-base font-medium text-blue-800">
           <a href="#about" className="hover:opacity-70 transition-opacity duration-300">[ about ]</a>
           <a href="#work" className="hover:opacity-70 transition-opacity duration-300">[ work ]</a>
           <a href="/resume.pdf" target="_blank" rel="noopener noreferrer" className="hover:opacity-70 transition-opacity duration-300">[ resume ]</a>
@@ -33,11 +33,19 @@ export default function Home() {
       </div>
 
     
-      <div className="absolute top-1/2 left-8 md:left-12 -translate-y-1/2 z-10 max-w-xl md:max-w-2xl text-black font-cursive tracking-wide leading-tight">
+      <div className="absolute top-80 left-8 md:left-12 -translate-y-1/2 z-10 max-w-xl md:max-w-2xl text-gray-700 font-bold font-cursive tracking-wide leading-tight">
         <h1 className="text-4xl md:text-6xl lg:text-7xl mb-6">
-          I create clean web designs
-          <br />
-          and handle data efficiently.
+          <TypeAnimation
+            sequence={[
+
+              'I craft modern web apps and build scalable solutions.',
+              2000,
+
+            ]}
+            wrapper="span"
+            speed={50}
+            repeat={1}
+          />
         </h1>
       </div>
 
