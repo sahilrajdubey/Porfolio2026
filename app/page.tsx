@@ -37,6 +37,16 @@ export default function Home() {
   ];
   return (
     <>
+      {/* SVG Filter Definition for Rough Paper Edge */}
+      <svg className="hidden">
+        <defs>
+          <filter id="roughpaper">
+            <feTurbulence type="fractalNoise" baseFrequency="0.04" numOctaves="5" result="noise" />
+            <feDisplacementMap in="SourceGraphic" in2="noise" scale="5" />
+          </filter>
+        </defs>
+      </svg>
+
       {/* Landing Page Section */}
       <section className="relative min-h-screen w-full overflow-hidden text-white selection:bg-white/20">
 
@@ -145,8 +155,8 @@ export default function Home() {
 
         {/* Paper Container */}
         <div className="relative z-10 w-full max-w-7xl">
-          {/* Paper with engraved border effect */}
-          <div className="bg-white rounded-lg p-12 md:p-16 lg:p-20 relative"
+          {/* Paper Background with Rough Edge */}
+          <div className="absolute inset-0 bg-white rounded-lg paper-edge"
             style={{
               background: 'linear-gradient(to bottom, #ffffff 0%, #fafafa 100%)',
               boxShadow: `
@@ -157,7 +167,11 @@ export default function Home() {
                  0 20px 60px rgba(0,0,0,0.3)
                `,
               border: '1px solid rgba(0,0,0,0.05)'
-            }}>
+            }}
+          />
+
+          {/* Content Content (on top of background) */}
+          <div className="relative p-12 md:p-16 lg:p-20">
 
             {/* About Me Heading */}
             <h2 className="flex items-center gap-2 md:gap-4 text-6xl md:text-7xl lg:text-8xl font-[family-name:var(--font-playfair)] font-bold text-black mb-12 tracking-tight">
@@ -356,10 +370,35 @@ export default function Home() {
             </div>
             <div className="pt-8 mt-20 border-t border-gray-200"></div>
           </div>
+        </div>
 
+      </section>
+      <section id="work" className="relative min-h-screen w-full flex items-center justify-center py-20 px-8 -mt-20">
+        {/* Static Background stays behind */}
 
+        {/* Paper Container */}
+        <div className="relative z-10 w-full max-w-7xl">
+          {/* Paper Background with Rough Edge */}
+          <div className="absolute inset-0 bg-white rounded-lg paper-edge"
+            style={{
+              background: 'linear-gradient(to bottom, #ffffff 0%, #fafafa 100%)',
+              boxShadow: `
+                 inset 0 2px 4px rgba(0,0,0,0.1),
+                 inset 0 -2px 4px rgba(255,255,255,0.9),
+                 inset 2px 0 4px rgba(0,0,0,0.1),
+                 inset -2px 0 4px rgba(255,255,255,0.9),
+                 0 20px 60px rgba(0,0,0,0.3)
+               `,
+              border: '1px solid rgba(0,0,0,0.05)'
+            }}
+          />
+          {/* Work Content */}
+          <div className="relative p-12 md:p-16 lg:p-20">
+            {/* Content goes here */}
+          </div>
         </div>
       </section>
     </>
+
   );
 }
