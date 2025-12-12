@@ -5,6 +5,7 @@ import LogoLoop from '@/components/LogoLoop';
 import { SiInstagram, SiGithub, SiLinkedin, SiDiscord, SiX } from 'react-icons/si';
 import CircularGallery from '@/components/CircularGallery';
 import RotatingText from '@/components/RotatingText';
+import TextPressure from '@/components/TextPressure';
 
 export default function Home() {
   const images = [
@@ -376,15 +377,30 @@ export default function Home() {
         </div>
 
       </section>
-      <section id="work" className="relative min-h-screen w-full flex items-center justify-center py-20 px-8 -mt-20">
+      <section id="work" className="relative min-h-screen w-full flex flex-col items-center justify-center py-20 px-8 -mt-20">
         {/* Static Background stays behind */}
+        <h2 className="flex items-center gap-2 md:gap-4 text-6xl md:text-7xl lg:text-8xl font-[family-name:var(--font-playfair)] font-bold text-black mb-12 tracking-tight">
+          My
+          <RotatingText
+            texts={['Creations', 'Innovations', 'Formations', 'Endeavours']}
+            mainClassName="bg-green-900 text-white px-2 sm:px-2 md:px-3 rounded-lg overflow-hidden py-0.5 sm:py-1 md:py-2 justify-center"
+            staggerFrom="last"
+            initial={{ y: "100%" }}
+            animate={{ y: 0 }}
+            exit={{ y: "-120%" }}
+            staggerDuration={0.025}
+            splitLevelClassName="overflow-hidden pb-0.5 sm:pb-1 md:pb-1"
+            transition={{ type: "spring", damping: 30, stiffness: 400 }}
+            rotationInterval={2000}
+          />
+        </h2>
 
         {/* Paper Container */}
         <div className="relative z-10 w-full max-w-7xl">
           {/* Paper Background with Rough Edge */}
           <div className="absolute inset-0 bg-white rounded-lg paper-edge"
             style={{
-              background: 'linear-gradient(to bottom, #ffffff 0%, #fafafa 100%)',
+              background: '#ebeadaff',
               boxShadow: `
                  inset 0 2px 4px rgba(0,0,0,0.1),
                  inset 0 -2px 4px rgba(255,255,255,0.9),
@@ -397,27 +413,76 @@ export default function Home() {
           />
           {/* Work Content */}
           <div className="relative p-12 md:p-16 lg:p-20">
-            {/* Work Gallery Section */}
-            {/* About Me Heading */}
-            <h2 className="flex items-center gap-2 md:gap-4 text-6xl md:text-7xl lg:text-8xl font-[family-name:var(--font-playfair)] font-bold text-black mb-12 tracking-tight">
-              MY
-              <RotatingText
-                texts={['Creations', 'Innovations','Formations', 'Endeavours']}
-                mainClassName="bg-green-900 text-white px-2 sm:px-2 md:px-3 rounded-lg overflow-hidden py-0.5 sm:py-1 md:py-2 justify-center"
-                staggerFrom="last"
-                initial={{ y: "100%" }}
-                animate={{ y: 0 }}
-                exit={{ y: "-120%" }}
-                staggerDuration={0.025}
-                splitLevelClassName="overflow-hidden pb-0.5 sm:pb-1 md:pb-1"
-                transition={{ type: "spring", damping: 30, stiffness: 400 }}
-                rotationInterval={2000}
-              />
-            </h2>
-            
             {/* Projects Grid */}
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-16">
-            
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-8">
+              <div className="col-span-1 md:col-span-2 lg:col-span-3 flex justify-center max-w-6xl mx-auto">
+                <div className="w-full md:w-3/5 lg:w-2/3 relative p-3 bg-white/50 backdrop-blur-sm border border-green-900/100 rounded-2xl shadow-xl">
+                  <video
+                    src="/rec1.mov"
+                    className="w-full h-auto object-cover rounded-xl shadow-inner"
+                    autoPlay
+                    loop
+                    muted
+                    playsInline
+                    suppressHydrationWarning
+                  />
+                </div>
+              </div>
+            </div>
+            <div className="relative p-4 md:p-8 lg:p-10">
+
+              {/* About Me Heading - Changed to div because TextPressure contains an h1 and div, creating invalid nesting inside h2 */}
+              <div className="flex flex-col items-center justify-center w-full mb-6">
+                <div className="w-full max-w-[800px] relative">
+                  <TextPressure
+                    text="ELEVATE"
+                    flex={true}
+                    alpha={false}
+                    stroke={false}
+                    width={true}
+                    weight={true}
+                    italic={true}
+                    textColor="#0b3c19ff"
+                    strokeColor="#490303ff"
+                    minFontSize={46}
+                  />
+                </div>
+                <div className="w-full max-w-[500px]">
+                  <svg viewBox="0 0 500 30" className="w-full h-auto drop-shadow-sm" preserveAspectRatio="none">
+                    <path
+                      d="M0,15 Q20,5 40,15 T80,15 T120,15 T160,15 T200,15 T240,15 T280,15 T320,15 T360,15 T400,15 T440,15 T480,15 T520,15"
+                      fill="none"
+                      stroke="#0b3c19ff"
+                      strokeWidth="3"
+                      strokeLinecap="round"
+                    />
+                  </svg>
+                </div>
+              </div>
+            </div>
+            <div className="text-center mb-1">
+              <h2 className="text-3xl md:text-5xl font-[family-name:var(--font-playfair)] font-medium text-black mb-4 tracking-widest uppercase">
+                Skill Tracking Dashboard
+              </h2>
+              <p className="text-gray-600 max-w-2xl mx-auto leading-relaxed text-sm md:text-base font-light">
+                A modern, gamified interface designed to help users monitor their learning journey in a clean and visually engaging way. It brings together progress tracking, achievements, streaks, and roadmap completion into one unified experience. Users can view their total XP, current level, daily learning streak, and milestone progress at a glance. The dashboard also highlights recently earned achievements such as streak rewards, course completions, and level milestones, making the entire learning process more exciting and motivating.
+
+                A dynamic roadmap progress bar shows how many milestones have been completed, helping users stay aligned with long-term goals. The dashboard is supported by a smooth sidebar navigation system, giving quick access to Courses, Skill Tracker, Roadmaps, Analysis, Profile, and Settings. With its dark-themed UI, gradient highlights, and clean card-based layout, the dashboard feels both professional and enjoyable to use. Overall, it provides a complete overview of personal growth and encourages users to stay consistent, keep learning, and level up their skills day by day.
+              </p>
+
+              <div className="flex justify-center mt-12 pb-8">
+                <a
+                  href="https://github.com/sahilrajdubey/skillprogressdashboard"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="flex items-center gap-2 text-gray-800 hover:text-black transition-colors duration-300 group"
+                >
+                  <SiGithub className="w-6 h-6 group-hover:scale-110 transition-transform duration-300" />
+                  <span className="font-[family-name:var(--font-playfair)] font-medium text-lg border-b border-transparent group-hover:border-black transition-all duration-300">
+                    View Repository
+                  </span>
+                </a>
+              </div>
             </div>
           </div>
         </div>
