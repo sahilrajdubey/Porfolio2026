@@ -3,7 +3,7 @@ import Image from 'next/image';
 import { TypeAnimation } from 'react-type-animation';
 import LogoLoop from '@/components/LogoLoop';
 import { SiInstagram, SiGithub, SiLinkedin, SiDiscord, SiX } from 'react-icons/si';
-import BounceCards from '@/components/BounceCards';
+import CircularGallery from '@/components/CircularGallery';
 
 export default function Home() {
   const images = [
@@ -66,7 +66,7 @@ const transformStyles = [
             e.preventDefault();
             document.getElementById('work')?.scrollIntoView({ behavior: 'smooth' });
           }} className="hover:opacity-70 transition-opacity duration-300 cursor-pointer">[ work ]</a>
-          <a href="#resume" onClick={(e) => {
+          <a href="https://drive.google.com/file/d/1jcJVFavLjZRXA556DFqE8P3iUBM2K1lt/view?usp=sharing" onClick={(e) => {
             e.preventDefault();
             document.getElementById('resume')?.scrollIntoView({ behavior: 'smooth' });
           }} className="hover:opacity-70 transition-opacity duration-300 cursor-pointer">[ resume ]</a>
@@ -195,17 +195,9 @@ const transformStyles = [
               </div>
             </div>
           </div>
-                  <BounceCards
-  className="custom-bounceCards"
-  images={images}
-  containerWidth={1000}
-  containerHeight={500}
-  animationDelay={1}
-  animationStagger={0.08}
-  easeType="elastic.out(1, 0.5)"
-  transformStyles={transformStyles}
-  enableHover={true}
-/>
+         <div style={{ height: '600px', position: 'relative' }}>
+          <CircularGallery bend={3} textColor="#000000ff" borderRadius={0.05} scrollEase={0.02} items={undefined}/>
+        </div>
         </div>
 
       </div>
