@@ -92,7 +92,7 @@ export default function Home() {
         </div>
 
 
-        <div className="absolute top-100 left-8 md:left-12 -translate-y-1/2 z-10 max-w-xl md:max-w-2xl text-gray-700 font-bold font-cursive tracking-wide leading-tight">
+        <div className="absolute top-100 left-8 md:left-21 -translate-y-1/2 z-10 max-w-xl md:max-w-2xl text-gray-700 font-bold font-cursive tracking-wide leading-tight">
           <h1 className="text-4xl md:text-1xl lg:text-4xl text-blue-800 mb-6">
             @Hey , I'm Sahil Raj Dubey
           </h1>
@@ -113,7 +113,10 @@ export default function Home() {
         </div>
 
 
-        <div className="absolute top-[calc(50%+15rem)] left-8 md:left-0 z-10 w-[calc(50%-4rem)]">
+        <div className="absolute top-[calc(50%+12rem)] left-8 md:left-21 z-10 w-[calc(50%-10rem)]">
+          <h1 className="text-2xl md:text-1xl lg:text-xl text-gray-800 mb-6">
+            @Connect
+          </h1>
           <div className="relative overflow-hidden">
             {/* Left Fade overlay */}
             <div className="absolute left-0 top-0 bottom-0 w-32 z-20 pointer-events-none"
@@ -138,9 +141,9 @@ export default function Home() {
         </div>
 
 
-        <div className="absolute top-1/2  md:right-0 bottom-0 -translate-y-1/2 z-10 w-8 h-150 md:w-170 md:h-210 grayscale hover:grayscale-0 transition-all duration-500">
+        <div className="absolute top-1/2  md:right-22 bottom-0 -translate-y-1/2 z-10 w-8 h-150 md:w-150 md:h-210 grayscale hover:grayscale-0 transition-all duration-500">
           <Image
-            src="/myphoto.png"
+            src="/myphoto1.png"
             alt="Sahil Raj Dubey"
             fill
             className="object-contain object-bottom md:object-right-bottom"
@@ -394,7 +397,28 @@ export default function Home() {
           />
           {/* Work Content */}
           <div className="relative p-12 md:p-16 lg:p-20">
-            {/* Content goes here */}
+            {/* Work Gallery Section */}
+            {/* About Me Heading */}
+            <h2 className="flex items-center gap-2 md:gap-4 text-6xl md:text-7xl lg:text-8xl font-[family-name:var(--font-playfair)] font-bold text-black mb-12 tracking-tight">
+              MY
+              <RotatingText
+                texts={['Creations', 'Innovations','Formations', 'Endeavours']}
+                mainClassName="bg-green-900 text-white px-2 sm:px-2 md:px-3 rounded-lg overflow-hidden py-0.5 sm:py-1 md:py-2 justify-center"
+                staggerFrom="last"
+                initial={{ y: "100%" }}
+                animate={{ y: 0 }}
+                exit={{ y: "-120%" }}
+                staggerDuration={0.025}
+                splitLevelClassName="overflow-hidden pb-0.5 sm:pb-1 md:pb-1"
+                transition={{ type: "spring", damping: 30, stiffness: 400 }}
+                rotationInterval={2000}
+              />
+            </h2>
+            
+            {/* Projects Grid */}
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-16">
+            
+            </div>
           </div>
         </div>
       </section>
