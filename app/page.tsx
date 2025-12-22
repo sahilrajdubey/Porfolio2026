@@ -199,7 +199,7 @@ export default function Home() {
                  inset 0 -2px 4px rgba(255,255,255,0.9),
                  inset 2px 0 4px rgba(0,0,0,0.1),
                  inset -2px 0 4px rgba(255,255,255,0.9),
-                 0 20px 60px rgba(0,0,0,0.3)
+                 0 20px 60px hsla(240, 1%, 30%, 0.35)
                `,
               border: '1px solid rgba(0,0,0,0.05)'
             }}
@@ -408,9 +408,9 @@ export default function Home() {
         </div>
 
       </section>
-      <section id="work" className="relative min-h-screen w-full flex flex-col items-center justify-center py-20 px-8 -mt-20">
+      <section id="work" className="relative min-h-screen w-full flex flex-col items-center justify-center py-20 px-8 -mt-5">
         {/* Static Background stays behind */}
-        <h2 className="flex items-center gap-2 md:gap-4 text-6xl md:text-7xl lg:text-8xl font-[family-name:var(--font-playfair)] font-bold text-black mb-12 tracking-tight">
+        <h2 className="flex items-center gap-2 md:gap-4 text-6xl md:text-7xl lg:text-8xl font-[family-name:var(--font-playfair)] font-bold text-black mb-5 tracking-tight">
           My
           <RotatingText
             texts={['Creations', 'Innovations', 'Formations', 'Endeavours']}
@@ -440,44 +440,171 @@ export default function Home() {
               showArrow={index < projects.length - 1}
             />
           ))
-        ) : (
-          <>
-            {/* Fallback: First Project */}
-            <ProjectCard
-              videoUrl="/rec1.mov"
-              textHeading="ELEVATE"
-              title="Skill Tracking Dashboard"
-              description="A modern, gamified interface designed to help users monitor their learning journey in a clean and visually engaging way. It brings together progress tracking, achievements, streaks, and roadmap completion into one unified experience. Users can view their total XP, current level, daily learning streak, and milestone progress at a glance. The dashboard also highlights recently earned achievements such as streak rewards, course completions, and level milestones, making the entire learning process more exciting and motivating. A dynamic roadmap progress bar shows how many milestones have been completed, helping users stay aligned with long-term goals. The dashboard is supported by a smooth sidebar navigation system, giving quick access to Courses, Skill Tracker, Roadmaps, Analysis, Profile, and Settings. With its dark-themed UI, gradient highlights, and clean card-based layout, the dashboard feels both professional and enjoyable to use. Overall, it provides a complete overview of personal growth and encourages users to stay consistent, keep learning, and level up their skills day by day."
-              githubUrl="https://github.com/sahilrajdubey/skillprogressdashboard"
-              backgroundColor="#ebeadaff"
-              showArrow={true}
-            />
-
-            {/* Fallback: Second Project */}
-            <ProjectCard
-              videoUrl="/rec2.mov"
-              textHeading="INNOVATE"
-              title="Innovate - The Tech Fest"
-              description="A webpage for a dynamic and immersive technology festival designed to bring together passionate innovators, developers, creators, and tech enthusiasts under one roof. The event celebrates the spirit of innovation by showcasing the latest advancements in technology, hands-on workshops, live demonstrations, and interactive technical competitions. From exploring emerging trends like AI, Web Development, Cybersecurity, Robotics, and Cloud Technologies to engaging in hackathons and project exhibitions, Innovate creates a platform where ideas meet execution. Participants get the opportunity to learn from industry experts, collaborate with like-minded peers, build real-world solutions, and unleash their creativity. Whether you're a beginner eager to explore the tech world or an advanced learner looking to level up your skills, Innovate – The Tech Fest delivers an inspiring and empowering experience that fuels curiosity, learning, and innovation."
-              githubUrl="https://github.com/gitcomit8/technovate-new"
-              backgroundColor="#eed7d7ff"
-              showArrow={true}
-            />
-
-            {/* Fallback: Third Project */}
-            <ProjectCard
-              videoUrl="/rec3.mov"
-              textHeading="GEEKSFORGEEKS"
-              title="GeeksForGeeks - Campus Body"
-              description="The GeeksforGeeks SRMIST Club Website is a comprehensive, modern, and fully interactive full-stack platform created to revolutionize the digital workflow of our college's tech club. Developed using Next.js and Tailwind CSS, paired with a scalable backend and advanced 3D web technologies, this project blends performance, design, and innovation into a single unified system. The website streamlines every aspect of club management—ranging from event creation, registration handling, announcements, and automated updates to hosting a dedicated gallery for every event with high-quality visuals and smooth animations. It also features a specialized Coding Challenges section inspired by LeetCode, allowing students to practice curated problems, sharpen their problem-solving skills, and stay consistent with competitive programming. With responsive layouts, fast rendering, role-based access control, and visually engaging 3D components, the platform significantly enhances the club's digital presence. Beyond functionality, it creates an immersive environment where students can learn, explore, collaborate, and stay connected with all ongoing technical activities, making it a complete digital ecosystem for the entire community."
-              githubUrl="https://github.com/gitcomit8/GEEKSFORGEEKS-SRMIST"
-              backgroundColor="#d7eceeff"
-              showArrow={false}
-            />
-          </>
-        )}
+        ) : (null)
+        }
 
       </section>
+
+      {/* Contact Section */}
+      <section id="contact" className="relative min-h-screen w-full flex flex-col items-center justify-center py-20 px-8 -mt-20">
+        <h2 className="flex items-center gap-2 md:gap-4 text-6xl md:text-7xl lg:text-8xl font-[family-name:var(--font-playfair)] font-bold text-black mb-12 tracking-tight">
+          Let's
+          {/* @ts-expect-error - RotatingText is a JSX component */}
+          <RotatingText
+            texts={['Connect', 'Collaborate', 'Create', 'Chat']}
+            mainClassName="bg-purple-900 text-white px-2 sm:px-2 md:px-3 rounded-lg overflow-hidden py-0.5 sm:py-1 md:py-2 justify-center"
+            staggerFrom="last"
+            initial={{ y: "100%" }}
+            animate={{ y: 0 }}
+            exit={{ y: "-120%" }}
+            staggerDuration={0.025}
+            splitLevelClassName="overflow-hidden pb-0.5 sm:pb-1 md:pb-1"
+            transition={{ type: "spring", damping: 30, stiffness: 400 }}
+            rotationInterval={2000}
+          />
+        </h2>
+
+        {/* Paper Container */}
+        <div className="relative z-10 w-full max-w-7xl">
+          {/* Paper Background with Rough Edge */}
+          <div
+            className="absolute inset-0 bg-white rounded-lg paper-edge"
+            style={{
+              background: '#f5e6ff',
+              boxShadow: `
+                inset 0 2px 4px rgba(0,0,0,0.1),
+                inset 0 -2px 4px rgba(255,255,255,0.9),
+                inset 2px 0 4px rgba(0,0,0,0.1),
+                inset -2px 0 4px rgba(255,255,255,0.9),
+                0 20px 60px rgba(0,0,0,0.3)
+              `,
+              border: '1px solid rgba(0,0,0,0.05)'
+            }}
+          />
+
+          {/* Contact Content */}
+          <div className="relative p-12 md:p-16 lg:p-20">
+            <div className="relative p-4 md:p-8 lg:p-10">
+              {/* Text Pressure Heading */}
+              <div className="flex flex-col items-center justify-center w-full mb-6">
+                <div className="w-full max-w-[800px] relative">
+                  <TextPressure
+                    text="GET IN TOUCH"
+                    flex={true}
+                    alpha={false}
+                    stroke={false}
+                    width={true}
+                    weight={true}
+                    italic={true}
+                    textColor="#4c1d95"
+                    strokeColor="#490303ff"
+                    minFontSize={46}
+                  />
+                </div>
+                <div className="w-full max-w-[500px]">
+                  <svg viewBox="0 0 500 30" className="w-full h-auto drop-shadow-sm" preserveAspectRatio="none">
+                    <path
+                      d="M0,15 Q20,5 40,15 T80,15 T120,15 T160,15 T200,15 T240,15 T280,15 T320,15 T360,15 T400,15 T440,15 T480,15 T520,15"
+                      fill="none"
+                      stroke="#4c1d95"
+                      strokeWidth="3"
+                      strokeLinecap="round"
+                    />
+                  </svg>
+                </div>
+              </div>
+            </div>
+
+            <div className="text-center mb-12">
+              <p className="text-gray-600 max-w-2xl mx-auto leading-relaxed text-lg md:text-xl font-[family-name:var(--font-inter)] font-light mb-8">
+                Have a project in mind or just want to say hi? I'd love to hear from you. 
+                Let's turn ideas into reality together.
+              </p>
+            </div>
+
+            {/* Contact Grid */}
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-4xl mx-auto mb-12">
+              {/* Email Card */}
+              <div className="p-8 bg-white/50 backdrop-blur-sm border border-purple-900/20 rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-105">
+                <div className="flex items-center gap-4 mb-4">
+                  <div className="w-12 h-12 bg-purple-900 rounded-full flex items-center justify-center">
+                    <svg className="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+                    </svg>
+                  </div>
+                  <h3 className="text-2xl font-[family-name:var(--font-playfair)] font-semibold text-black">Email</h3>
+                </div>
+                <a href="mailto:sahilrajdubey@gmail.com" className="text-gray-700 hover:text-purple-900 transition-colors duration-300 font-[family-name:var(--font-inter)] text-lg">
+                  sahilrajdubey@gmail.com
+                </a>
+              </div>
+
+              {/* Location Card */}
+              <div className="p-8 bg-white/50 backdrop-blur-sm border border-purple-900/20 rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-105">
+                <div className="flex items-center gap-4 mb-4">
+                  <div className="w-12 h-12 bg-purple-900 rounded-full flex items-center justify-center">
+                    <svg className="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
+                    </svg>
+                  </div>
+                  <h3 className="text-2xl font-[family-name:var(--font-playfair)] font-semibold text-black">Location</h3>
+                </div>
+                <p className="text-gray-700 font-[family-name:var(--font-inter)] text-lg">
+                  Delhi, India
+                </p>
+              </div>
+            </div>
+
+            {/* Social Links */}
+            <div className="flex flex-col items-center gap-8 pt-8 border-t border-gray-200">
+              <h3 className="text-3xl font-[family-name:var(--font-playfair)] font-semibold text-black">
+                Connect on Social
+              </h3>
+              <div className="flex gap-6 flex-wrap justify-center">
+                {socialLogos.map((social, index) => (
+                  <a
+                    key={index}
+                    href={social.href}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="group relative"
+                  >
+                    <div className="w-16 h-16 bg-purple-900 rounded-full flex items-center justify-center transition-all duration-300 hover:scale-110 hover:bg-purple-800 hover:shadow-xl">
+                      <span className="text-white text-3xl">{social.node}</span>
+                    </div>
+                    <span className="absolute -bottom-8 left-1/2 -translate-x-1/2 text-sm font-[family-name:var(--font-inter)] text-gray-600 opacity-0 group-hover:opacity-100 transition-opacity duration-300 whitespace-nowrap">
+                      {social.title}
+                    </span>
+                  </a>
+                ))}
+              </div>
+            </div>
+
+            {/* Call to Action */}
+            <div className="text-center mt-16">
+              <p className="text-gray-800 font-[family-name:var(--font-inter)] text-xl mb-8 max-w-2xl mx-auto">
+                Whether you have a question, a project idea, or just want to connect, feel free to reach out. 
+                I'm always open to discussing new opportunities and collaborations.
+              </p>
+              <a
+                href="mailto:sahilrajdubey@gmail.com"
+                className="inline-flex items-center gap-3 px-8 py-4 bg-purple-900 text-white font-[family-name:var(--font-playfair)] font-semibold text-lg rounded-full hover:bg-purple-800 transition-all duration-300 hover:scale-105 hover:shadow-xl"
+              >
+                <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+                </svg>
+                Send a Message
+              </a>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Footer */}
+      <footer className="relative w-full bg-white py-8 text-center text-sm text-black/60 border-t border-gray-200">
+        © Copyright {new Date().getFullYear()} by Sahil Raj Dubey. All rights reserved.
+      </footer>
     </>
 
   );
