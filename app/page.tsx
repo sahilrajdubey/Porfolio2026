@@ -103,7 +103,7 @@ export default function Home() {
 
 
           {/* Layer 3: Overlay Image (myphoto4.png) */}
-          <div className={`absolute top-20 bottom-[-1px] right-[-5%] lg:right-[-3%] w-[500px] md:w-[650px] lg:w-[800px] transition-opacity duration-700 ease-in-out ${bgPhase === 'landing' ? 'opacity-100' : 'opacity-0'}`}>
+          <div className={`absolute top-20 bottom-[-1px] right-[-20%] sm:right-[-10%] md:right-[-5%] lg:right-[-3%] w-[350px] sm:w-[450px] md:w-[650px] lg:w-[800px] transition-opacity duration-700 ease-in-out ${bgPhase === 'landing' ? 'opacity-30 sm:opacity-60 md:opacity-100' : 'opacity-0'}`}>
             <Image
               src="/myphoto4.png"
               alt="Overlay Photo"
@@ -133,12 +133,12 @@ export default function Home() {
         </div>
 
 
-        <div className="relative z-50 w-full px-8 py-4 md:px-12 md:py-6 flex justify-between items-start pointer-events-none">
-          <div className="flex items-center gap-6 md:gap-10 text-sm md:text-base font-semibold text-white pointer-events-auto tracking-tight">
-            <span className="bg-gradient-to-r from-white via-gray-200 to-white bg-clip-text text-transparent font-[family-name:var(--font-inter)]  tracking-wider">Sahil Raj Dubey xD</span>
+        <div className="relative z-50 w-full px-4 py-4 md:px-8 lg:px-12 md:py-6 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 pointer-events-none">
+          <div className="flex items-center gap-3 md:gap-6 text-xs sm:text-sm md:text-base font-semibold text-white pointer-events-auto tracking-tight">
+            <span className="bg-gradient-to-r from-white via-gray-200 to-white bg-clip-text text-transparent font-[family-name:var(--font-inter)] tracking-wider">Sahil Raj Dubey xD</span>
           </div>
 
-          <nav className="flex items-center gap-6 md:gap-10 text-sm md:text-base font-medium text-white/90 pointer-events-auto font-[family-name:var(--font-inter)]">
+          <nav className="flex items-center gap-3 sm:gap-4 md:gap-6 lg:gap-10 text-xs sm:text-sm md:text-base font-medium text-white/90 pointer-events-auto font-[family-name:var(--font-inter)] flex-wrap">
             <a href="#about" onClick={(e) => {
               e.preventDefault();
               document.getElementById('about')?.scrollIntoView({ behavior: 'smooth' });
@@ -157,14 +157,15 @@ export default function Home() {
             <a href="#contact" onClick={(e) => {
               e.preventDefault();
               document.getElementById('contact')?.scrollIntoView({ behavior: 'smooth' });
-            }} className="hover:text-white hover:scale-105 transition-all duration-300 cursor-pointer tracking-wide">[let's chat]</a>
+            }} className="hover:text-white hover:scale-105 transition-all duration-300 cursor-pointer tracking-wide">[chat]</a>
           </nav>
         </div>
 
 
         {/* Left Side Intro - Enhanced Design */}
-        <div className="absolute left-8 md:left-16 lg:left-24 top-1/2 -translate-y-1/2 z-40 max-w-2xl">
-          <div className="space-y-8">
+        <div className="absolute left-4 right-4 sm:left-6 sm:right-auto md:left-16 lg:left-24 top-1/2 -translate-y-1/2 z-40 max-w-full sm:max-w-xl md:max-w-2xl px-2 sm:px-0">
+          <div className="space-y-4 sm:space-y-6 md:space-y-8">
+
 
 
             {/* Main Heading with Animation */}
@@ -178,7 +179,7 @@ export default function Home() {
                   ]}
                   wrapper="h1"
                   speed={50}
-                  className="text-6xl md:text-7xl lg:text-8xl font-bold text-white tracking-tight leading-tight"
+                  className="text-3xl sm:text-4xl md:text-6xl lg:text-7xl xl:text-8xl font-bold text-white tracking-tight leading-tight"
                   style={{ fontFamily: 'SF Pro Display, -apple-system, BlinkMacSystemFont, sans-serif', letterSpacing: '-0.02em' }}
                   repeat={0}
                   cursor={true}
@@ -187,40 +188,40 @@ export default function Home() {
             </div>
 
             {/* Role Tags */}
-            <div className="flex flex-wrap gap-3">
-              <span className="px-4 py-2 bg-white/5 backdrop-blur-sm border border-white/10 rounded-full text-sm text-white/80 font-medium hover:bg-white/10 transition-all duration-300" style={{ fontFamily: 'SF Pro Text, -apple-system, BlinkMacSystemFont, sans-serif' }}>
+            <div className="flex flex-wrap gap-2 sm:gap-3">
+              <span className="px-3 py-1.5 sm:px-4 sm:py-2 bg-white/5 backdrop-blur-sm border border-white/10 rounded-full text-xs sm:text-sm text-white/80 font-medium hover:bg-white/10 transition-all duration-300" style={{ fontFamily: 'SF Pro Text, -apple-system, BlinkMacSystemFont, sans-serif' }}>
                 Full-Stack Developer
               </span>
-              <span className="px-4 py-2 bg-white/5 backdrop-blur-sm border border-white/10 rounded-full text-sm text-white/80 font-medium hover:bg-white/10 transition-all duration-300" style={{ fontFamily: 'SF Pro Text, -apple-system, BlinkMacSystemFont, sans-serif' }}>
+              <span className="px-3 py-1.5 sm:px-4 sm:py-2 bg-white/5 backdrop-blur-sm border border-white/10 rounded-full text-xs sm:text-sm text-white/80 font-medium hover:bg-white/10 transition-all duration-300" style={{ fontFamily: 'SF Pro Text, -apple-system, BlinkMacSystemFont, sans-serif' }}>
                 UI/UX Designer
               </span>
-              <span className="px-4 py-2 bg-white/5 backdrop-blur-sm border border-white/10 rounded-full text-sm text-white/80 font-medium hover:bg-white/10 transition-all duration-300" style={{ fontFamily: 'SF Pro Text, -apple-system, BlinkMacSystemFont, sans-serif' }}>
+              <span className="px-3 py-1.5 sm:px-4 sm:py-2 bg-white/5 backdrop-blur-sm border border-white/10 rounded-full text-xs sm:text-sm text-white/80 font-medium hover:bg-white/10 transition-all duration-300" style={{ fontFamily: 'SF Pro Text, -apple-system, BlinkMacSystemFont, sans-serif' }}>
                 Tech Enthusiast
               </span>
             </div>
 
             {/* Description with Glass Effect */}
-            <div className="relative">
+            <div className="relative hidden sm:block">
               <div className="absolute inset-0 bg-gradient-to-r from-white/5 to-transparent rounded-2xl blur-xl"></div>
-              <p className="relative text-lg md:text-xl text-white/70 leading-relaxed max-w-xl backdrop-blur-sm bg-white/5 p-6 rounded-2xl border border-white/10" style={{ fontFamily: 'SF Pro Text, -apple-system, BlinkMacSystemFont, sans-serif' }}>
+              <p className="relative text-sm sm:text-base md:text-lg lg:text-xl text-white/70 leading-relaxed max-w-xl backdrop-blur-sm bg-white/5 p-4 sm:p-5 md:p-6 rounded-2xl border border-white/10" style={{ fontFamily: 'SF Pro Text, -apple-system, BlinkMacSystemFont, sans-serif' }}>
                 Crafting <span className="text-white font-semibold">elegant digital experiences</span> with modern technologies. 
                 Transforming ideas into <span className="text-white font-semibold">scalable solutions</span> that make a difference.
               </p>
             </div>
 
             {/* CTA Buttons - Enhanced */}
-            <div className="flex flex-col sm:flex-row gap-4 pt-2">
+            <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 pt-2">
               <a
                 href="#work"
                 onClick={(e) => {
                   e.preventDefault();
                   document.getElementById('work')?.scrollIntoView({ behavior: 'smooth' });
                 }}
-                className="group relative px-8 py-4 bg-white text-black font-semibold rounded-full overflow-hidden transition-all duration-300 hover:scale-105 hover:shadow-2xl cursor-pointer flex items-center justify-center gap-2"
+                className="group relative px-6 py-3 sm:px-8 sm:py-4 bg-white text-black font-semibold text-sm sm:text-base rounded-full overflow-hidden transition-all duration-300 hover:scale-105 hover:shadow-2xl cursor-pointer flex items-center justify-center gap-2"
                 style={{ fontFamily: 'SF Pro Text, -apple-system, BlinkMacSystemFont, sans-serif' }}
               >
                 <span className="relative z-10">View My Work</span>
-                <svg className="w-5 h-5 relative z-10 group-hover:translate-x-1 transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <svg className="w-4 h-4 sm:w-5 sm:h-5 relative z-10 group-hover:translate-x-1 transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7l5 5m0 0l-5 5m5-5H6" />
                 </svg>
                 <div className="absolute inset-0 bg-gradient-to-r from-gray-100 to-white opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
@@ -231,17 +232,17 @@ export default function Home() {
                   e.preventDefault();
                   document.getElementById('contact')?.scrollIntoView({ behavior: 'smooth' });
                 }}
-                className="group relative px-8 py-4 backdrop-blur-md bg-white/10 border-2 border-white/30 text-white font-semibold rounded-full overflow-hidden transition-all duration-300 hover:scale-105 cursor-pointer flex items-center justify-center gap-2 hover:bg-white/20"
+                className="group relative px-6 py-3 sm:px-8 sm:py-4 backdrop-blur-md bg-white/10 border-2 border-white/30 text-white font-semibold text-sm sm:text-base rounded-full overflow-hidden transition-all duration-300 hover:scale-105 cursor-pointer flex items-center justify-center gap-2 hover:bg-white/20"
                 style={{ fontFamily: 'SF Pro Text, -apple-system, BlinkMacSystemFont, sans-serif' }}
               >
                 <span className="relative z-10">Get in Touch</span>
-                <svg className="w-5 h-5 relative z-10" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <svg className="w-4 h-4 sm:w-5 sm:h-5 relative z-10" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
                 </svg>
               </a>
             </div>
 
-
+           
           </div>
         </div>
 
