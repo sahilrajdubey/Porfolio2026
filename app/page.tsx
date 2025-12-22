@@ -6,8 +6,39 @@ import { SiInstagram, SiGithub, SiLinkedin, SiDiscord, SiX } from 'react-icons/s
 import CircularGallery from '@/components/CircularGallery';
 import RotatingText from '@/components/RotatingText';
 import TextPressure from '@/components/TextPressure';
+import { useState, useEffect } from 'react';
 
 export default function Home() {
+  const [bgPhase, setBgPhase] = useState<'landing' | 'black' | 'main'>('landing');
+
+  useEffect(() => {
+    const handleScroll = () => {
+      const aboutSection = document.getElementById('about');
+      if (!aboutSection) return;
+
+      const scrollY = window.scrollY;
+      const aboutTop = aboutSection.offsetTop;
+      const aboutHeight = aboutSection.offsetHeight;
+
+      // Calculate split point (halfway through about section)
+      // Adjust offset checks to better match visual breaks if needed
+      if (scrollY < aboutTop - 100) { // Keep landing bg until close to about
+        setBgPhase('landing');
+      } else if (scrollY < aboutTop + aboutHeight / 100
+      ) {
+        setBgPhase('black');
+      } else {
+        setBgPhase('main');
+      }
+    };
+
+    window.addEventListener('scroll', handleScroll);
+    // Trigger once on mount
+    handleScroll();
+
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
+
   const images = [
     "https://picsum.photos/400/400?grayscale",
     "https://picsum.photos/500/500?grayscale",
@@ -24,16 +55,10 @@ export default function Home() {
     "rotate(-5deg) translate(150px)"
   ];
   const socialLogos = [
-    { node: <SiInstagram color="#000000ff" />, title: "Instagram", href: "https://www.instagram.com/sahilrajdubey_" },
-    { node: <SiGithub color="#000000ff" />, title: "GitHub", href: "https://github.com/sahilrajdubey" },
-    { node: <SiLinkedin color="#000000ff" />, title: "LinkedIn", href: "https://www.linkedin.com/in/sahil-raj-dubey/" },
-    { node: <SiDiscord color="#000000ff" />, title: "Discord", href: "https://discord.gg/58uwPkFjJJ" },
-    { node: <SiX color="#000000ff" />, title: "Instagram", href: "https://x.com/" },
-    { node: <SiInstagram color="#000000ff" />, title: "Instagram", href: "https://www.instagram.com/sahilrajdubey_" },
-    { node: <SiGithub color="#040303ff" />, title: "GitHub", href: "https://github.com/sahilrajdubey" },
-    { node: <SiLinkedin color="#040303ff" />, title: "LinkedIn", href: "https://www.linkedin.com/in/sahil-raj-dubey/" },
-    { node: <SiDiscord color="#040303ff" />, title: "Discord", href: "https://discord.gg/UFqqTbqUzE" },
-    { node: <SiX color="#040303ff" />, title: "Instagram", href: "https://x.com/" },
+    { node: <SiInstagram color="#ffffffff" />, title: "Instagram", href: "https://www.instagram.com/sahilrajdubey_" },
+    { node: <SiGithub color="#ffffffff" />, title: "GitHub", href: "https://github.com/sahilrajdubey" },
+    { node: <SiLinkedin color="#ffffffff" />, title: "LinkedIn", href: "https://www.linkedin.com/in/sahil-raj-dubey/" },
+    { node: <SiDiscord color="#ffffffff" />, title: "Discord", href: "https://discord.gg/58uwPkFjJJ" },
 
   ];
   return (
@@ -49,116 +74,111 @@ export default function Home() {
       </svg>
 
       {/* Landing Page Section */}
-      <section className="relative min-h-screen w-full overflow-hidden text-white selection:bg-white/20">
+      <section className="relative h-screen w-full overflow-hidden text-white selection:bg-white/20 pb-32">
 
 
-        <div className="fixed inset-0 z-0 select-none">
-          <Image
-            src="/image.jpg"
-            alt="Background"
-            fill
-            priority
-            className="object-cover object-center"
-            quality={100}
-          />
+        <div className="fixed inset-0 z-0 select-none bg-black transition-colors duration-700">
+          {/* Layer 1: Background Landing Image (bgimage.png) */}
+          <div className={`absolute inset-0 transition-opacity duration-700 ease-in-out ${bgPhase === 'landing' ? 'opacity-100' : 'opacity-0'}`}>
+            <Image
+              src="/bgimage.png"
+              alt="Background Landing"
+              fill
+              priority
+              className="object-cover object-center"
+              quality={100}
+            />
+          </div>
+
+
+          {/* Layer 3: Overlay Image (myphoto4.png) */}
+          <div className={`absolute top-20 bottom-[-1px] right-[-5%] lg:right-[-3%] w-[500px] md:w-[650px] lg:w-[800px] transition-opacity duration-700 ease-in-out ${bgPhase === 'landing' ? 'opacity-100' : 'opacity-0'}`}>
+            <Image
+              src="/myphoto4.png"
+              alt="Overlay Photo"
+              fill
+              priority
+              className="object-contain object-bottom"
+              quality={100}
+            />
+          </div>
+
+          {/* Layer 4: Black Background (Actually just showing the parent bg-black when others are transparent, but we can be explicit or just rely on opacity) */}
+          {/* If both images are opacity-0, the background color of the parent div (bg-black) shows through.
+              Since bgPhase 'black' sets both images to opacity 0, we get the black background. 
+          */}
+
+          {/* Layer 5: Main Image (image.jpg) */}
+          <div className={`absolute inset-0 transition-opacity duration-700 ease-in-out ${bgPhase === 'main' ? 'opacity-100' : 'opacity-0'}`}>
+            <Image
+              src="/image.jpg"
+              alt="Background Main"
+              fill
+              priority
+              className="object-cover object-center"
+              quality={100}
+            />
+          </div>
         </div>
 
 
-        <div className="relative z-50 w-full p-8 md:p-12 flex justify-between items-start font-helvetica tracking-wide pointer-events-none">
-          <div className="flex items-center gap-6 md:gap-10 text-sm md:text-base font-medium text-black pointer-events-auto">
-            Sahil Raj Dubey xD
+        <div className="relative z-50 w-full px-8 py-4 md:px-12 md:py-6 flex justify-between items-start pointer-events-none">
+          <div className="flex items-center gap-6 md:gap-10 text-sm md:text-base font-semibold text-white pointer-events-auto tracking-tight">
+            <span className="bg-gradient-to-r from-white via-gray-200 to-white bg-clip-text text-transparent font-[family-name:var(--font-inter)]  tracking-wider">Sahil Raj Dubey xD</span>
           </div>
 
-          <nav className="flex items-center gap-6 md:gap-10 text-sm md:text-base font-medium text-blue-800 pointer-events-auto">
+          <nav className="flex items-center gap-6 md:gap-10 text-sm md:text-base font-medium text-white/90 pointer-events-auto font-[family-name:var(--font-inter)]">
             <a href="#about" onClick={(e) => {
               e.preventDefault();
               document.getElementById('about')?.scrollIntoView({ behavior: 'smooth' });
-            }} className="hover:opacity-70 transition-opacity duration-300 cursor-pointer">[ about ]</a>
+            }} className="hover:text-white hover:scale-105 transition-all duration-300 cursor-pointer tracking-wide">[about]</a>
             <a href="#work" onClick={(e) => {
               e.preventDefault();
               document.getElementById('work')?.scrollIntoView({ behavior: 'smooth' });
-            }} className="hover:opacity-70 transition-opacity duration-300 cursor-pointer">[ work ]</a>
+            }} className="hover:text-white hover:scale-105 transition-all duration-300 cursor-pointer tracking-wide">[work]</a>
             <a
               href="https://drive.google.com/uc?export=download&id=1jcJVFavLjZRXA556DFqE8P3iUBM2K1lt"
-              className="hover:opacity-70 transition-opacity duration-300 cursor-pointer"
+              className="hover:text-white hover:scale-105 transition-all duration-300 cursor-pointer tracking-wide"
               download
             >
-              [ resume ]
+              [resume]
             </a>
             <a href="#contact" onClick={(e) => {
               e.preventDefault();
               document.getElementById('contact')?.scrollIntoView({ behavior: 'smooth' });
-            }} className="hover:opacity-70 transition-opacity duration-300 cursor-pointer">[ let's chat ]</a>
+            }} className="hover:text-white hover:scale-105 transition-all duration-300 cursor-pointer tracking-wide">[let's chat]</a>
           </nav>
         </div>
 
 
-        <div className="absolute top-100 left-8 md:left-21 -translate-y-1/2 z-10 max-w-xl md:max-w-2xl text-gray-700 font-bold font-cursive tracking-wide leading-tight">
-          <h1 className="text-4xl md:text-1xl lg:text-4xl text-blue-800 mb-6">
-            @Hey , I'm Sahil Raj Dubey
-          </h1>
-          <h1 className="text-4xl md:text-6xl lg:text-7xl mb-6">
-            <TypeAnimation
-              sequence={[
-
-                'I craft modern web apps and build scalable solutions.',
-                2000,
-
-              ]}
-              wrapper="span"
-              speed={50}
-              repeat={1}
-            />
-          </h1>
-
-        </div>
 
 
-        <div className="absolute top-[calc(50%+12rem)] left-8 md:left-21 z-10 w-[calc(50%-10rem)]">
-          <h1 className="text-2xl md:text-1xl lg:text-xl text-gray-800 mb-6">
-            @Connect
-          </h1>
+        <div className="absolute bottom-20 left-1/2 -translate-x-1/2 z-10 w-full max-w-2xl px-4">
+          <h3 className="text-sm md:text-base lg:text-lg text-white/60 mb-4 font-[family-name:var(--font-inter)] uppercase tracking-widest font-light">
+
+          </h3>
           <div className="relative overflow-hidden">
             {/* Left Fade overlay */}
-            <div className="absolute left-0 top-0 bottom-0 w-32 z-20 pointer-events-none"
-              style={{ background: 'linear-gradient(to right, rgba(255, 255, 255, 0.9) 0%, transparent 80%)' }} />
+            <div className="absolute left-0 top-0 bottom-0 w-32 z-30 pointer-events-none"
+              style={{ background: 'linear-gradient(to right, rgba(0, 0, 0, 0.9) 0%, transparent 80%)' }} />
             {/* Right Fade overlay */}
-            <div className="absolute right-0 top-0 bottom-0 w-32 z-20 pointer-events-none"
-              style={{ background: 'linear-gradient(to left, rgba(249, 249, 249, 0.96) 0%, transparent 80%)' }} />
+            <div className="absolute right-0 top-0 bottom-0 w-32 z-30 pointer-events-none"
+              style={{ background: 'linear-gradient(to left, rgba(7, 6, 6, 0.96) 0%, transparent 80%)' }} />
 
-            <LogoLoop
-              logos={socialLogos}
-              speed={110}
-              direction="left"
-              logoHeight={40}
-              gap={60}
-              hoverSpeed={0}
-              scaleOnHover
-              fadeOut={true}
-              fadeOutColor="rgba(0,0,0,0)"
-              ariaLabel="Social Media Links"
-            />
+
           </div>
         </div>
 
 
-        <div className="absolute top-1/2  md:right-22 bottom-0 -translate-y-1/2 z-10 w-8 h-150 md:w-150 md:h-210 grayscale hover:grayscale-0 transition-all duration-500">
-          <Image
-            src="/myphoto1.png"
-            alt="Sahil Raj Dubey"
-            fill
-            className="object-contain object-bottom md:object-right-bottom"
-            priority
-          />
-        </div>
+
       </section>
 
 
-      <section id="about" className="relative min-h-screen w-full flex items-center justify-center py-20 px-8 -mt-20">
+      <section id="about" className="relative min-h-screen w-full flex items-center justify-center py-20 px-8">
         {/* Static Background stays behind */}
 
         {/* Paper Container */}
-        <div className="relative z-10 w-full max-w-7xl">
+        <div className="relative z-10  w-full max-w-7xl">
           {/* Paper Background with Rough Edge */}
           <div className="absolute inset-0 bg-white rounded-lg paper-edge"
             style={{
@@ -568,11 +588,11 @@ export default function Home() {
                 Innovate - The Tech Fest
               </h2>
               <p className="text-gray-600 max-w-2xl mx-auto leading-relaxed text-sm md:text-base font-light">
-               A webpage for a dynamic and immersive technology festival designed to bring together passionate innovators, developers, creators, and tech enthusiasts under one roof. The event celebrates the spirit of innovation by showcasing the latest advancements in technology, hands-on workshops, live demonstrations, and interactive technical competitions.
+                A webpage for a dynamic and immersive technology festival designed to bring together passionate innovators, developers, creators, and tech enthusiasts under one roof. The event celebrates the spirit of innovation by showcasing the latest advancements in technology, hands-on workshops, live demonstrations, and interactive technical competitions.
 
-From exploring emerging trends like AI, Web Development, Cybersecurity, Robotics, and Cloud Technologies to engaging in hackathons and project exhibitions, Innovate creates a platform where ideas meet execution. Participants get the opportunity to learn from industry experts, collaborate with like-minded peers, build real-world solutions, and unleash their creativity.
+                From exploring emerging trends like AI, Web Development, Cybersecurity, Robotics, and Cloud Technologies to engaging in hackathons and project exhibitions, Innovate creates a platform where ideas meet execution. Participants get the opportunity to learn from industry experts, collaborate with like-minded peers, build real-world solutions, and unleash their creativity.
 
-Whether you’re a beginner eager to explore the tech world or an advanced learner looking to level up your skills, Innovate – The Tech Fest delivers an inspiring and empowering experience that fuels curiosity, learning, and innovation.
+                Whether you’re a beginner eager to explore the tech world or an advanced learner looking to level up your skills, Innovate – The Tech Fest delivers an inspiring and empowering experience that fuels curiosity, learning, and innovation.
               </p>
 
               <div className="flex justify-center mt-12 pb-8">
@@ -668,7 +688,7 @@ Whether you’re a beginner eager to explore the tech world or an advanced learn
                 GeeksForGeeks - Campus Body
               </h2>
               <p className="text-gray-600 max-w-2xl mx-auto leading-relaxed text-sm md:text-base font-light">
-The GeeksforGeeks SRMIST Club Website is a comprehensive, modern, and fully interactive full-stack platform created to revolutionize the digital workflow of our college’s tech club. Developed using Next.js and Tailwind CSS, paired with a scalable backend and advanced 3D web technologies, this project blends performance, design, and innovation into a single unified system. The website streamlines every aspect of club management—ranging from event creation, registration handling, announcements, and automated updates to hosting a dedicated gallery for every event with high-quality visuals and smooth animations. It also features a specialized Coding Challenges section inspired by LeetCode, allowing students to practice curated problems, sharpen their problem-solving skills, and stay consistent with competitive programming. With responsive layouts, fast rendering, role-based access control, and visually engaging 3D components, the platform significantly enhances the club’s digital presence. Beyond functionality, it creates an immersive environment where students can learn, explore, collaborate, and stay connected with all ongoing technical activities, making it a complete digital ecosystem for the entire community.     
+                The GeeksforGeeks SRMIST Club Website is a comprehensive, modern, and fully interactive full-stack platform created to revolutionize the digital workflow of our college’s tech club. Developed using Next.js and Tailwind CSS, paired with a scalable backend and advanced 3D web technologies, this project blends performance, design, and innovation into a single unified system. The website streamlines every aspect of club management—ranging from event creation, registration handling, announcements, and automated updates to hosting a dedicated gallery for every event with high-quality visuals and smooth animations. It also features a specialized Coding Challenges section inspired by LeetCode, allowing students to practice curated problems, sharpen their problem-solving skills, and stay consistent with competitive programming. With responsive layouts, fast rendering, role-based access control, and visually engaging 3D components, the platform significantly enhances the club’s digital presence. Beyond functionality, it creates an immersive environment where students can learn, explore, collaborate, and stay connected with all ongoing technical activities, making it a complete digital ecosystem for the entire community.
               </p>
               <div className="flex justify-center mt-12 pb-8">
                 <a
@@ -684,7 +704,7 @@ The GeeksforGeeks SRMIST Club Website is a comprehensive, modern, and fully inte
                 </a>
               </div>
 
-             
+
             </div>
           </div>
         </div>
