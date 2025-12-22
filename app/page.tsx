@@ -7,7 +7,7 @@ import CircularGallery from '@/components/CircularGallery';
 import RotatingText from '@/components/RotatingText';
 import TextPressure from '@/components/TextPressure';
 import ProjectCard from '@/components/ProjectCard';
-import { useState, useEffect } from 'react';
+import { useState, useEffect  } from 'react';
 import { getProjectVideos, ProjectVideo } from '@/lib/contentful';
 
 export default function Home() {
@@ -532,7 +532,7 @@ export default function Home() {
       <section id="contact" className="relative min-h-screen w-full flex flex-col items-center justify-center py-20 px-8 -mt-20">
         <h2 className="flex items-center gap-2 md:gap-4 text-6xl md:text-7xl lg:text-8xl font-[family-name:var(--font-playfair)] font-bold text-black mb-12 tracking-tight">
           Let's
-          {/* @ts-expect-error - RotatingText is a JSX component */}
+
           <RotatingText
             texts={['Connect', 'Collaborate', 'Create', 'Chat']}
             mainClassName="bg-purple-900 text-white px-2 sm:px-2 md:px-3 rounded-lg overflow-hidden py-0.5 sm:py-1 md:py-2 justify-center"
