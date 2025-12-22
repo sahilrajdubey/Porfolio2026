@@ -2,14 +2,17 @@
 import Image from 'next/image';
 import { TypeAnimation } from 'react-type-animation';
 import LogoLoop from '@/components/LogoLoop';
-import { SiInstagram, SiGithub, SiLinkedin, SiDiscord, SiX } from 'react-icons/si';
+import { SiInstagram, SiGithub, SiLinkedin, SiDiscord } from 'react-icons/si';
 import CircularGallery from '@/components/CircularGallery';
 import RotatingText from '@/components/RotatingText';
 import TextPressure from '@/components/TextPressure';
+import ProjectCard from '@/components/ProjectCard';
 import { useState, useEffect } from 'react';
+import { getProjectVideos, ProjectVideo } from '@/lib/contentful';
 
 export default function Home() {
   const [bgPhase, setBgPhase] = useState<'landing' | 'black' | 'main'>('landing');
+  const [projects, setProjects] = useState<ProjectVideo[]>([]);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -37,6 +40,14 @@ export default function Home() {
     handleScroll();
 
     return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
+
+  useEffect(() => {
+    const fetchProjects = async () => {
+      const data = await getProjectVideos();
+      setProjects(data);
+    };
+    fetchProjects();
   }, []);
 
   const images = [
@@ -415,299 +426,56 @@ export default function Home() {
           />
         </h2>
 
-        {/* Paper Container */}
-        <div className="relative z-10 w-full max-w-7xl">
-          {/* Paper Background with Rough Edge */}
-          <div className="absolute inset-0 bg-white rounded-lg paper-edge"
-            style={{
-              background: '#ebeadaff',
-              boxShadow: `
-                 inset 0 2px 4px rgba(0,0,0,0.1),
-                 inset 0 -2px 4px rgba(255,255,255,0.9),
-                 inset 2px 0 4px rgba(0,0,0,0.1),
-                 inset -2px 0 4px rgba(255,255,255,0.9),
-                 0 20px 60px rgba(0,0,0,0.3)
-               `,
-              border: '1px solid rgba(0,0,0,0.05)'
-            }}
-          />
-          {/* Work Content */}
-          <div className="relative p-12 md:p-16 lg:p-20">
-            {/* Projects Grid */}
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-8">
-              <div className="col-span-1 md:col-span-2 lg:col-span-3 flex justify-center max-w-6xl mx-auto">
-                <div className="w-full md:w-3/5 lg:w-2/3 relative p-3 bg-white/50 backdrop-blur-sm border border-green-900/100 rounded-2xl shadow-xl">
-                  <video
-                    src="/rec1.mov"
-                    className="w-full h-auto object-cover rounded-xl shadow-inner"
-                    autoPlay
-                    loop
-                    muted
-                    playsInline
-                    suppressHydrationWarning
-                  />
-                </div>
-              </div>
-            </div>
-            <div className="relative p-4 md:p-8 lg:p-10">
+        {/* Render Projects from Contentful or Fallback */}
+        {projects.length > 0 ? (
+          projects.map((project, index) => (
+            <ProjectCard
+              key={index}
+              videoUrl={project.videoUrl}
+              textHeading={project.textHeading}
+              title={project.title}
+              description={project.description}
+              githubUrl={project.githubUrl}
+              backgroundColor={project.backgroundColor}
+              showArrow={index < projects.length - 1}
+            />
+          ))
+        ) : (
+          <>
+            {/* Fallback: First Project */}
+            <ProjectCard
+              videoUrl="/rec1.mov"
+              textHeading="ELEVATE"
+              title="Skill Tracking Dashboard"
+              description="A modern, gamified interface designed to help users monitor their learning journey in a clean and visually engaging way. It brings together progress tracking, achievements, streaks, and roadmap completion into one unified experience. Users can view their total XP, current level, daily learning streak, and milestone progress at a glance. The dashboard also highlights recently earned achievements such as streak rewards, course completions, and level milestones, making the entire learning process more exciting and motivating. A dynamic roadmap progress bar shows how many milestones have been completed, helping users stay aligned with long-term goals. The dashboard is supported by a smooth sidebar navigation system, giving quick access to Courses, Skill Tracker, Roadmaps, Analysis, Profile, and Settings. With its dark-themed UI, gradient highlights, and clean card-based layout, the dashboard feels both professional and enjoyable to use. Overall, it provides a complete overview of personal growth and encourages users to stay consistent, keep learning, and level up their skills day by day."
+              githubUrl="https://github.com/sahilrajdubey/skillprogressdashboard"
+              backgroundColor="#ebeadaff"
+              showArrow={true}
+            />
 
-              {/* About Me Heading - Changed to div because TextPressure contains an h1 and div, creating invalid nesting inside h2 */}
-              <div className="flex flex-col items-center justify-center w-full mb-6">
-                <div className="w-full max-w-[800px] relative">
-                  <TextPressure
-                    text="ELEVATE"
-                    flex={true}
-                    alpha={false}
-                    stroke={false}
-                    width={true}
-                    weight={true}
-                    italic={true}
-                    textColor="#0b3c19ff"
-                    strokeColor="#490303ff"
-                    minFontSize={46}
-                  />
-                </div>
-                <div className="w-full max-w-[500px]">
-                  <svg viewBox="0 0 500 30" className="w-full h-auto drop-shadow-sm" preserveAspectRatio="none">
-                    <path
-                      d="M0,15 Q20,5 40,15 T80,15 T120,15 T160,15 T200,15 T240,15 T280,15 T320,15 T360,15 T400,15 T440,15 T480,15 T520,15"
-                      fill="none"
-                      stroke="#0b3c19ff"
-                      strokeWidth="3"
-                      strokeLinecap="round"
-                    />
-                  </svg>
-                </div>
-              </div>
-            </div>
-            <div className="text-center mb-1">
-              <h2 className="text-3xl md:text-5xl font-[family-name:var(--font-playfair)] font-medium text-black mb-4 tracking-widest uppercase">
-                Skill Tracking Dashboard
-              </h2>
-              <p className="text-gray-600 max-w-2xl mx-auto leading-relaxed text-sm md:text-base font-light">
-                A modern, gamified interface designed to help users monitor their learning journey in a clean and visually engaging way. It brings together progress tracking, achievements, streaks, and roadmap completion into one unified experience. Users can view their total XP, current level, daily learning streak, and milestone progress at a glance. The dashboard also highlights recently earned achievements such as streak rewards, course completions, and level milestones, making the entire learning process more exciting and motivating.
+            {/* Fallback: Second Project */}
+            <ProjectCard
+              videoUrl="/rec2.mov"
+              textHeading="INNOVATE"
+              title="Innovate - The Tech Fest"
+              description="A webpage for a dynamic and immersive technology festival designed to bring together passionate innovators, developers, creators, and tech enthusiasts under one roof. The event celebrates the spirit of innovation by showcasing the latest advancements in technology, hands-on workshops, live demonstrations, and interactive technical competitions. From exploring emerging trends like AI, Web Development, Cybersecurity, Robotics, and Cloud Technologies to engaging in hackathons and project exhibitions, Innovate creates a platform where ideas meet execution. Participants get the opportunity to learn from industry experts, collaborate with like-minded peers, build real-world solutions, and unleash their creativity. Whether you're a beginner eager to explore the tech world or an advanced learner looking to level up your skills, Innovate – The Tech Fest delivers an inspiring and empowering experience that fuels curiosity, learning, and innovation."
+              githubUrl="https://github.com/gitcomit8/technovate-new"
+              backgroundColor="#eed7d7ff"
+              showArrow={true}
+            />
 
-                A dynamic roadmap progress bar shows how many milestones have been completed, helping users stay aligned with long-term goals. The dashboard is supported by a smooth sidebar navigation system, giving quick access to Courses, Skill Tracker, Roadmaps, Analysis, Profile, and Settings. With its dark-themed UI, gradient highlights, and clean card-based layout, the dashboard feels both professional and enjoyable to use. Overall, it provides a complete overview of personal growth and encourages users to stay consistent, keep learning, and level up their skills day by day.
-              </p>
-
-              <div className="flex justify-center mt-12 pb-8">
-                <a
-                  href="https://github.com/sahilrajdubey/skillprogressdashboard"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="flex items-center gap-2 text-gray-800 hover:text-black transition-colors duration-300 group"
-                >
-                  <SiGithub className="w-6 h-6 group-hover:scale-110 transition-transform duration-300" />
-                  <span className="font-[family-name:var(--font-playfair)] font-medium text-lg border-b border-transparent group-hover:border-black transition-all duration-300">
-                    View Repository
-                  </span>
-                </a>
-              </div>
-
-              {/* Wavy Arrow */}
-              <div className="absolute -bottom-24 left-1/2 -translate-x-1/2 w-8 text-black animate-bounce">
-                <svg viewBox="0 0 24 50" fill="none" className="w-full h-auto">
-                  <path d="M12 2 C16 6 8 10 12 14 C16 18 8 22 12 26 C16 30 8 34 12 38 L12 48 M7 43 L12 48 L17 43" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
-                </svg>
-              </div>
-            </div>
-          </div>
-
-
-
-
-        </div>
-
-        {/* Second Paper Container (Duplicate) */}
-        <div className="relative z-10 w-full max-w-7xl mt-32">
-          {/* Paper Background with Rough Edge */}
-          <div className="absolute inset-0 bg-white rounded-lg paper-edge"
-            style={{
-              background: '#eed7d7ff',
-              boxShadow: `
-                 inset 0 2px 4px rgba(0,0,0,0.1),
-                 inset 0 -2px 4px rgba(255,255,255,0.9),
-                 inset 2px 0 4px rgba(0,0,0,0.1),
-                 inset -2px 0 4px rgba(255,255,255,0.9),
-                 0 20px 60px rgba(0,0,0,0.3)
-               `,
-              border: '1px solid rgba(0,0,0,0.05)'
-            }}
-          />
-          {/* Work Content */}
-          <div className="relative p-12 md:p-16 lg:p-20">
-            {/* Projects Grid */}
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-8">
-              <div className="col-span-1 md:col-span-2 lg:col-span-3 flex justify-center max-w-6xl mx-auto">
-                <div className="w-full md:w-3/5 lg:w-2/3 relative p-3 bg-white/50 backdrop-blur-sm border border-green-900/100 rounded-2xl shadow-xl">
-                  <video
-                    src="/rec2.mov"
-                    className="w-full h-auto object-cover rounded-xl shadow-inner"
-                    autoPlay
-                    loop
-                    muted
-                    playsInline
-                    suppressHydrationWarning
-                  />
-                </div>
-              </div>
-            </div>
-            <div className="relative p-4 md:p-8 lg:p-10">
-
-              {/* About Me Heading - Changed to div because TextPressure contains an h1 and div, creating invalid nesting inside h2 */}
-              <div className="flex flex-col items-center justify-center w-full mb-6">
-                <div className="w-full max-w-[800px] relative">
-                  <TextPressure
-                    text="INNOVATE"
-                    flex={true}
-                    alpha={false}
-                    stroke={false}
-                    width={true}
-                    weight={true}
-                    italic={true}
-                    textColor="#0b3c19ff"
-                    strokeColor="#490303ff"
-                    minFontSize={46}
-                  />
-                </div>
-                <div className="w-full max-w-[500px]">
-                  <svg viewBox="0 0 500 30" className="w-full h-auto drop-shadow-sm" preserveAspectRatio="none">
-                    <path
-                      d="M0,15 Q20,5 40,15 T80,15 T120,15 T160,15 T200,15 T240,15 T280,15 T320,15 T360,15 T400,15 T440,15 T480,15 T520,15"
-                      fill="none"
-                      stroke="#0b3c19ff"
-                      strokeWidth="3"
-                      strokeLinecap="round"
-                    />
-                  </svg>
-                </div>
-              </div>
-            </div>
-            <div className="text-center mb-1">
-              <h2 className="text-3xl md:text-5xl font-[family-name:var(--font-playfair)] font-medium text-black mb-4 tracking-widest uppercase">
-                Innovate - The Tech Fest
-              </h2>
-              <p className="text-gray-600 max-w-2xl mx-auto leading-relaxed text-sm md:text-base font-light">
-                A webpage for a dynamic and immersive technology festival designed to bring together passionate innovators, developers, creators, and tech enthusiasts under one roof. The event celebrates the spirit of innovation by showcasing the latest advancements in technology, hands-on workshops, live demonstrations, and interactive technical competitions.
-
-                From exploring emerging trends like AI, Web Development, Cybersecurity, Robotics, and Cloud Technologies to engaging in hackathons and project exhibitions, Innovate creates a platform where ideas meet execution. Participants get the opportunity to learn from industry experts, collaborate with like-minded peers, build real-world solutions, and unleash their creativity.
-
-                Whether you’re a beginner eager to explore the tech world or an advanced learner looking to level up your skills, Innovate – The Tech Fest delivers an inspiring and empowering experience that fuels curiosity, learning, and innovation.
-              </p>
-
-              <div className="flex justify-center mt-12 pb-8">
-                <a
-                  href="https://github.com/gitcomit8/technovate-new"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="flex items-center gap-2 text-gray-800 hover:text-black transition-colors duration-300 group"
-                >
-                  <SiGithub className="w-6 h-6 group-hover:scale-110 transition-transform duration-300" />
-                  <span className="font-[family-name:var(--font-playfair)] font-medium text-lg border-b border-transparent group-hover:border-black transition-all duration-300">
-                    View Repository
-                  </span>
-                </a>
-              </div>
-
-              {/* Wavy Arrow */}
-              <div className="absolute -bottom-24 left-1/2 -translate-x-1/2 w-8 text-black animate-bounce">
-                <svg viewBox="0 0 24 50" fill="none" className="w-full h-auto">
-                  <path d="M12 2 C16 6 8 10 12 14 C16 18 8 22 12 26 C16 30 8 34 12 38 L12 48 M7 43 L12 48 L17 43" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
-                </svg>
-              </div>
-            </div>
-          </div>
-        </div>
-        {/* Second Paper Container (Duplicate) */}
-        <div className="relative z-10 w-full max-w-7xl mt-32">
-          {/* Paper Background with Rough Edge */}
-          <div className="absolute inset-0 bg-white rounded-lg paper-edge"
-            style={{
-              background: '#d7eceeff',
-              boxShadow: `
-                 inset 0 2px 4px rgba(0,0,0,0.1),
-                 inset 0 -2px 4px rgba(255,255,255,0.9),
-                 inset 2px 0 4px rgba(0,0,0,0.1),
-                 inset -2px 0 4px rgba(255,255,255,0.9),
-                 0 20px 60px rgba(0,0,0,0.3)
-               `,
-              border: '1px solid rgba(0,0,0,0.05)'
-            }}
-          />
-          {/* Work Content */}
-          <div className="relative p-12 md:p-16 lg:p-20">
-            {/* Projects Grid */}
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-8">
-              <div className="col-span-1 md:col-span-2 lg:col-span-3 flex justify-center max-w-6xl mx-auto">
-                <div className="w-full md:w-3/5 lg:w-2/3 relative p-3 bg-white/50 backdrop-blur-sm border border-green-900/100 rounded-2xl shadow-xl">
-                  <video
-                    src="/rec3.mov"
-                    className="w-full h-auto object-cover rounded-xl shadow-inner"
-                    autoPlay
-                    loop
-                    muted
-                    playsInline
-                    suppressHydrationWarning
-                  />
-                </div>
-              </div>
-            </div>
-            <div className="relative p-4 md:p-8 lg:p-10">
-
-              {/* About Me Heading - Changed to div because TextPressure contains an h1 and div, creating invalid nesting inside h2 */}
-              <div className="flex flex-col items-center justify-center w-full mb-6">
-                <div className="w-full max-w-[800px] relative">
-                  <TextPressure
-                    text="GEEKSFORGEEKS"
-                    flex={true}
-                    alpha={false}
-                    stroke={false}
-                    width={true}
-                    weight={true}
-                    italic={true}
-                    textColor="#0b3c19ff"
-                    strokeColor="#490303ff"
-                    minFontSize={46}
-                  />
-                </div>
-                <div className="w-full max-w-[500px]">
-                  <svg viewBox="0 0 500 30" className="w-full h-auto drop-shadow-sm" preserveAspectRatio="none">
-                    <path
-                      d="M0,15 Q20,5 40,15 T80,15 T120,15 T160,15 T200,15 T240,15 T280,15 T320,15 T360,15 T400,15 T440,15 T480,15 T520,15"
-                      fill="none"
-                      stroke="#0b3c19ff"
-                      strokeWidth="3"
-                      strokeLinecap="round"
-                    />
-                  </svg>
-                </div>
-              </div>
-            </div>
-            <div className="text-center mb-1">
-              <h2 className="text-3xl md:text-5xl font-[family-name:var(--font-playfair)] font-medium text-black mb-4 tracking-widest uppercase">
-                GeeksForGeeks - Campus Body
-              </h2>
-              <p className="text-gray-600 max-w-2xl mx-auto leading-relaxed text-sm md:text-base font-light">
-                The GeeksforGeeks SRMIST Club Website is a comprehensive, modern, and fully interactive full-stack platform created to revolutionize the digital workflow of our college’s tech club. Developed using Next.js and Tailwind CSS, paired with a scalable backend and advanced 3D web technologies, this project blends performance, design, and innovation into a single unified system. The website streamlines every aspect of club management—ranging from event creation, registration handling, announcements, and automated updates to hosting a dedicated gallery for every event with high-quality visuals and smooth animations. It also features a specialized Coding Challenges section inspired by LeetCode, allowing students to practice curated problems, sharpen their problem-solving skills, and stay consistent with competitive programming. With responsive layouts, fast rendering, role-based access control, and visually engaging 3D components, the platform significantly enhances the club’s digital presence. Beyond functionality, it creates an immersive environment where students can learn, explore, collaborate, and stay connected with all ongoing technical activities, making it a complete digital ecosystem for the entire community.
-              </p>
-              <div className="flex justify-center mt-12 pb-8">
-                <a
-                  href="https://github.com/gitcomit8/GEEKSFORGEEKS-SRMIST"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="flex items-center gap-2 text-gray-800 hover:text-black transition-colors duration-300 group"
-                >
-                  <SiGithub className="w-6 h-6 group-hover:scale-110 transition-transform duration-300" />
-                  <span className="font-[family-name:var(--font-playfair)] font-medium text-lg border-b border-transparent group-hover:border-black transition-all duration-300">
-                    View Repository
-                  </span>
-                </a>
-              </div>
-
-
-            </div>
-          </div>
-        </div>
+            {/* Fallback: Third Project */}
+            <ProjectCard
+              videoUrl="/rec3.mov"
+              textHeading="GEEKSFORGEEKS"
+              title="GeeksForGeeks - Campus Body"
+              description="The GeeksforGeeks SRMIST Club Website is a comprehensive, modern, and fully interactive full-stack platform created to revolutionize the digital workflow of our college's tech club. Developed using Next.js and Tailwind CSS, paired with a scalable backend and advanced 3D web technologies, this project blends performance, design, and innovation into a single unified system. The website streamlines every aspect of club management—ranging from event creation, registration handling, announcements, and automated updates to hosting a dedicated gallery for every event with high-quality visuals and smooth animations. It also features a specialized Coding Challenges section inspired by LeetCode, allowing students to practice curated problems, sharpen their problem-solving skills, and stay consistent with competitive programming. With responsive layouts, fast rendering, role-based access control, and visually engaging 3D components, the platform significantly enhances the club's digital presence. Beyond functionality, it creates an immersive environment where students can learn, explore, collaborate, and stay connected with all ongoing technical activities, making it a complete digital ecosystem for the entire community."
+              githubUrl="https://github.com/gitcomit8/GEEKSFORGEEKS-SRMIST"
+              backgroundColor="#d7eceeff"
+              showArrow={false}
+            />
+          </>
+        )}
 
       </section>
     </>

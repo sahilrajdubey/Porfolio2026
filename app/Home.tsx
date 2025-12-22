@@ -1,0 +1,440 @@
+'use client';
+import CircularGallery from '@/components/CircularGallery';
+import ProjectCard from '@/components/ProjectCard';
+import RotatingText from '@/components/RotatingText';
+import { ProjectVideo, getProjectVideos } from '@/lib/contentful';
+import Image from 'next/image';
+import { useState, useEffect } from 'react';
+import { SiInstagram, SiGithub, SiLinkedin, SiDiscord } from 'react-icons/si';
+
+
+export default function Home() {
+    const [bgPhase, setBgPhase] = useState<'landing' | 'black' | 'main'>('landing');
+    const [projects, setProjects] = useState<ProjectVideo[]>([]);
+
+    useEffect(() => {
+        const handleScroll = () => {
+            const aboutSection = document.getElementById('about');
+            if (!aboutSection) return;
+
+            const scrollY = window.scrollY;
+            const aboutTop = aboutSection.offsetTop;
+            const aboutHeight = aboutSection.offsetHeight;
+
+            // Calculate split point (halfway through about section)
+            // Adjust offset checks to better match visual breaks if needed
+            if (scrollY < aboutTop - 100) { // Keep landing bg until close to about
+                setBgPhase('landing');
+            } else if (scrollY < aboutTop + aboutHeight / 100) {
+                setBgPhase('black');
+            } else {
+                setBgPhase('main');
+            }
+        };
+
+        window.addEventListener('scroll', handleScroll);
+        // Trigger once on mount
+        handleScroll();
+
+        return () => window.removeEventListener('scroll', handleScroll);
+    }, []);
+
+    useEffect(() => {
+        const fetchProjects = async () => {
+            const data = await getProjectVideos();
+            setProjects(data);
+        };
+        fetchProjects();
+    }, []);
+
+    const images = [
+        "https://picsum.photos/400/400?grayscale",
+        "https://picsum.photos/500/500?grayscale",
+        "https://picsum.photos/600/600?grayscale",
+        "https://picsum.photos/700/700?grayscale",
+        "https://picsum.photos/300/300?grayscale"
+    ];
+
+    const transformStyles = [
+        "rotate(5deg) translate(-150px)",
+        "rotate(0deg) translate(-70px)",
+        "rotate(-5deg)",
+        "rotate(5deg) translate(70px)",
+        "rotate(-5deg) translate(150px)"
+    ];
+    const socialLogos = [
+        { node: <SiInstagram color="#ffffffff" />, title: "Instagram", href: "https://www.instagram.com/sahilrajdubey_" },
+        { node: <SiGithub color="#ffffffff" />, title: "GitHub", href: "https://github.com/sahilrajdubey" },
+        { node: <SiLinkedin color="#ffffffff" />, title: "LinkedIn", href: "https://www.linkedin.com/in/sahil-raj-dubey/" },
+        { node: <SiDiscord color="#ffffffff" />, title: "Discord", href: "https://discord.gg/58uwPkFjJJ" },
+    ];
+    return (
+        <>
+            {/* SVG Filter Definition for Rough Paper Edge */}
+            <svg className="hidden">
+                <defs>
+                    <filter id="roughpaper">
+                        <feTurbulence type="fractalNoise" baseFrequency="0.04" numOctaves="5" result="noise" />
+                        <feDisplacementMap in="SourceGraphic" in2="noise" scale="5" />
+                    </filter>
+                </defs>
+            </svg>
+
+            {/* Landing Page Section */}
+            <section className="relative h-screen w-full overflow-hidden text-white selection:bg-white/20 pb-32">
+
+
+                <div className="fixed inset-0 z-0 select-none bg-black transition-colors duration-700">
+                    {/* Layer 1: Background Landing Image (bgimage.png) */}
+                    <div className={`absolute inset-0 transition-opacity duration-700 ease-in-out ${bgPhase === 'landing' ? 'opacity-100' : 'opacity-0'}`}>
+                        <Image
+                            src="/bgimage.png"
+                            alt="Background Landing"
+                            fill
+                            priority
+                            className="object-cover object-center"
+                            quality={100} />
+                    </div>
+
+
+                    {/* Layer 3: Overlay Image (myphoto4.png) */}
+                    <div className={`absolute top-20 bottom-[-1px] right-[-5%] lg:right-[-3%] w-[500px] md:w-[650px] lg:w-[800px] transition-opacity duration-700 ease-in-out ${bgPhase === 'landing' ? 'opacity-100' : 'opacity-0'}`}>
+                        <Image
+                            src="/myphoto4.png"
+                            alt="Overlay Photo"
+                            fill
+                            priority
+                            className="object-contain object-bottom"
+                            quality={100} />
+                    </div>
+
+                    {/* Layer 4: Black Background (Actually just showing the parent bg-black when others are transparent, but we can be explicit or just rely on opacity) */}
+                    {/* If both images are opacity-0, the background color of the parent div (bg-black) shows through.
+                Since bgPhase 'black' sets both images to opacity 0, we get the black background.
+            */}
+
+                    {/* Layer 5: Main Image (image.jpg) */}
+                    <div className={`absolute inset-0 transition-opacity duration-700 ease-in-out ${bgPhase === 'main' ? 'opacity-100' : 'opacity-0'}`}>
+                        <Image
+                            src="/image.jpg"
+                            alt="Background Main"
+                            fill
+                            priority
+                            className="object-cover object-center"
+                            quality={100} />
+                    </div>
+                </div>
+
+
+                <div className="relative z-50 w-full px-8 py-4 md:px-12 md:py-6 flex justify-between items-start pointer-events-none">
+                    <div className="flex items-center gap-6 md:gap-10 text-sm md:text-base font-semibold text-white pointer-events-auto tracking-tight">
+                        <span className="bg-gradient-to-r from-white via-gray-200 to-white bg-clip-text text-transparent font-[family-name:var(--font-inter)]  tracking-wider">Sahil Raj Dubey xD</span>
+                    </div>
+
+                    <nav className="flex items-center gap-6 md:gap-10 text-sm md:text-base font-medium text-white/90 pointer-events-auto font-[family-name:var(--font-inter)]">
+                        <a href="#about" onClick={(e) => {
+                            e.preventDefault();
+                            document.getElementById('about')?.scrollIntoView({ behavior: 'smooth' });
+                        }} className="hover:text-white hover:scale-105 transition-all duration-300 cursor-pointer tracking-wide">[about]</a>
+                        <a href="#work" onClick={(e) => {
+                            e.preventDefault();
+                            document.getElementById('work')?.scrollIntoView({ behavior: 'smooth' });
+                        }} className="hover:text-white hover:scale-105 transition-all duration-300 cursor-pointer tracking-wide">[work]</a>
+                        <a
+                            href="https://drive.google.com/uc?export=download&id=1jcJVFavLjZRXA556DFqE8P3iUBM2K1lt"
+                            className="hover:text-white hover:scale-105 transition-all duration-300 cursor-pointer tracking-wide"
+                            download
+                        >
+                            [resume]
+                        </a>
+                        <a href="#contact" onClick={(e) => {
+                            e.preventDefault();
+                            document.getElementById('contact')?.scrollIntoView({ behavior: 'smooth' });
+                        }} className="hover:text-white hover:scale-105 transition-all duration-300 cursor-pointer tracking-wide">[let's chat]</a>
+                    </nav>
+                </div>
+
+
+
+
+                <div className="absolute bottom-20 left-1/2 -translate-x-1/2 z-10 w-full max-w-2xl px-4">
+                    <h3 className="text-sm md:text-base lg:text-lg text-white/60 mb-4 font-[family-name:var(--font-inter)] uppercase tracking-widest font-light">
+
+                    </h3>
+                    <div className="relative overflow-hidden">
+                        {/* Left Fade overlay */}
+                        <div className="absolute left-0 top-0 bottom-0 w-32 z-30 pointer-events-none"
+                            style={{ background: 'linear-gradient(to right, rgba(0, 0, 0, 0.9) 0%, transparent 80%)' }} />
+                        {/* Right Fade overlay */}
+                        <div className="absolute right-0 top-0 bottom-0 w-32 z-30 pointer-events-none"
+                            style={{ background: 'linear-gradient(to left, rgba(7, 6, 6, 0.96) 0%, transparent 80%)' }} />
+
+
+                    </div>
+                </div>
+
+
+
+            </section>
+
+
+            <section id="about" className="relative min-h-screen w-full flex items-center justify-center py-20 px-8">
+                {/* Static Background stays behind */}
+
+                {/* Paper Container */}
+                <div className="relative z-10  w-full max-w-7xl">
+                    {/* Paper Background with Rough Edge */}
+                    <div className="absolute inset-0 bg-white rounded-lg paper-edge"
+                        style={{
+                            background: 'linear-gradient(to bottom, #ffffff 0%, #fafafa 100%)',
+                            boxShadow: `
+                 inset 0 2px 4px rgba(0,0,0,0.1),
+                 inset 0 -2px 4px rgba(255,255,255,0.9),
+                 inset 2px 0 4px rgba(0,0,0,0.1),
+                 inset -2px 0 4px rgba(255,255,255,0.9),
+                 0 20px 60px rgba(0,0,0,0.3)
+               `,
+                            border: '1px solid rgba(0,0,0,0.05)'
+                        }} />
+
+                    {/* Content Content (on top of background) */}
+                    <div className="relative p-12 md:p-16 lg:p-20">
+
+                        {/* About Me Heading */}
+                        <h2 className="flex items-center gap-2 md:gap-4 text-6xl md:text-7xl lg:text-8xl font-[family-name:var(--font-playfair)] font-bold text-black mb-12 tracking-tight">
+                            About
+                            {/* @ts-ignore */}
+                            <RotatingText
+                                texts={['Persona', 'Speaker', 'Myself', 'Sahil']}
+                                mainClassName="bg-blue-900 text-white px-2 sm:px-2 md:px-3 rounded-lg overflow-hidden py-0.5 sm:py-1 md:py-2 justify-center"
+                                staggerFrom="last"
+                                initial={{ y: "100%" }}
+                                animate={{ y: 0 }}
+                                exit={{ y: "-120%" }}
+                                staggerDuration={0.025}
+                                splitLevelClassName="overflow-hidden pb-0.5 sm:pb-1 md:pb-1"
+                                transition={{ type: "spring", damping: 30, stiffness: 400 }}
+                                rotationInterval={2000} />
+                        </h2>
+
+                        {/* Content Area - You can add your content here */}
+                        <div className="space-y-8 text-lg md:text-xl text-gray-800 font-[family-name:var(--font-inter)] leading-relaxed">
+                            <p className="text-2xl font-medium text-gray-900">
+                                Hello! I’m Sahil Raj Dubey, an ardent technophile shaping sophisticated web ecosystems through innovation and refined craftsmanship.
+                            </p>
+
+                            <p>
+                                I’m a detail-driven creator who blends aesthetics with logic to build meaningful digital experiences. My journey in tech revolves around crafting intuitive web applications, exploring the depths of data science, and shaping intelligent systems through machine learning and artificial intelligence. With Python as my core tool, I transform ideas into practical, project-oriented solutions that speak through clean design and efficient execution.
+
+                                Beyond technical skill, I thrive in collaborative spaces—leading with clarity, contributing with empathy, and elevating every team I work with. Whether developing innovative products or exploring new technologies, I approach every challenge with curiosity, discipline, and an eye for refinement.
+                            </p>
+
+                            <p>
+                                My journey in web development started with a curiosity about how things work
+                                on the internet, and has evolved into a deep passion for creating digital solutions
+                                that make a difference.
+                            </p>
+
+                            {/* Skills or additional sections can go here */}
+                            <div className="pt-8 mt-8 border-t border-gray-200">
+                                <h3 className="text-3xl font-[family-name:var(--font-playfair)] font-semibold text-black mb-6">
+                                    What I Do
+                                </h3>
+                                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                                    <div className="p-6 bg-gray-50 rounded-lg">
+                                        <h4 className="text-xl font-semibold mb-2 text-black">Frontend Development</h4>
+                                        <p className="text-gray-700">Building responsive and interactive user interfaces</p>
+                                    </div>
+                                    <div className="p-6 bg-gray-50 rounded-lg">
+                                        <h4 className="text-xl font-semibold mb-2 text-black">UI/UX Design</h4>
+                                        <p className="text-gray-700">Creating beautiful and intuitive user experiences</p>
+                                    </div>
+                                    <div className="p-6 bg-gray-50 rounded-lg">
+                                        <h4 className="text-xl font-semibold mb-2 text-black">Backend Development</h4>
+                                        <p className="text-gray-700">Building fast, secure, scalable server systems</p>
+                                    </div>
+                                    <div className="p-6 bg-gray-50 rounded-lg">
+                                        <h4 className="text-xl font-semibold mb-2 text-black">Data Science</h4>
+                                        <p className="text-gray-700">Transforming raw data into actionable insights</p>
+                                    </div>
+                                    <div className="p-6 bg-gray-50 rounded-lg">
+                                        <h4 className="text-xl font-semibold mb-2 text-black">Machine Learning</h4>
+                                        <p className="text-gray-700">Creating intelligent models that learn patterns</p>
+                                    </div>
+                                    <div className="p-6 bg-gray-50 rounded-lg">
+                                        <h4 className="text-xl font-semibold mb-2 text-black">Database Management</h4>
+                                        <p className="text-gray-700">Structuring optimized and reliable data storage</p>
+                                    </div>
+                                    <div className="p-6 bg-gray-50 rounded-lg">
+                                        <h4 className="text-xl font-semibold mb-2 text-black">API Development</h4>
+                                        <p className="text-gray-700">Designing seamless and efficient data flows</p>
+                                    </div>
+                                    <div className="p-6 bg-gray-50 rounded-lg">
+                                        <h4 className="text-xl font-semibold mb-2 text-black">Team Collaboration</h4>
+                                        <p className="text-gray-700">Working cohesively to build robust solutions</p>
+                                    </div>
+
+                                </div>
+                                <div className="pt-20 mt-8 border-t border-gray-200"></div>
+                                <h3 className="text-3xl font-[family-name:var(--font-playfair)] font-semibold text-black mb-6">
+                                    Certifications
+                                </h3>
+                            </div>
+                        </div>
+                        <div style={{ height: '600px', position: 'relative' }} className="-mx-12 md:-mx-16 lg:-mx-20 -mt-24 -mb-12 md:-mb-16 lg:-mb-10 rounded-b-lg overflow-hidden">
+                            <CircularGallery bend={3} textColor="#000000ff" borderRadius={0.05} scrollEase={0.02} items={undefined} />
+                        </div>
+                        <div className="pt-8 mt-9 border-t border-gray-200"></div>
+                        <h3 className="text-3xl font-[family-name:var(--font-playfair)] font-semibold text-black mb-6">
+                            Tools & Technologies
+                        </h3>
+                        <div className="flex flex-col items-center justify-center w-full">
+                            <table className="mx-auto w-full border-collapse border border-black">
+                                <tbody>
+                                    <tr>
+                                        <td className="text-center p-6 border border-black text-black font-medium">
+                                            <div className="flex flex-col items-center gap-2">
+                                                <img src="https://techstack-generator.vercel.app/python-icon.svg" alt="Python" width="48" height="48" className="w-12 h-12 md:w-16 md:h-16" />
+                                                <span>Python</span>
+                                            </div>
+                                        </td>
+                                        <td className="text-center p-6 border border-black text-black font-medium">
+                                            <div className="flex flex-col items-center gap-2">
+                                                <img src="https://techstack-generator.vercel.app/js-icon.svg" alt="JavaScript" width="48" height="48" className="w-12 h-12 md:w-16 md:h-16" />
+                                                <span>JavaScript</span>
+                                            </div>
+                                        </td>
+                                        <td className="text-center p-6 border border-black text-black font-medium">
+                                            <div className="flex flex-col items-center gap-2">
+                                                <img src="https://techstack-generator.vercel.app/ts-icon.svg" alt="TypeScript" width="48" height="48" className="w-12 h-12 md:w-16 md:h-16" />
+                                                <span>TypeScript</span>
+                                            </div>
+                                        </td>
+                                        <td className="text-center p-6 border border-black text-black font-medium">
+                                            <div className="flex flex-col items-center gap-2">
+                                                <img src="https://techstack-generator.vercel.app/react-icon.svg" alt="React" width="48" height="48" className="w-12 h-12 md:w-16 md:h-16" />
+                                                <span>React</span>
+                                            </div>
+                                        </td>
+                                        <td className="text-center p-6 border border-black text-black font-medium">
+                                            <div className="flex flex-col items-center gap-2">
+                                                <img src="https://skillicons.dev/icons?i=nextjs" alt="Next.js" width="48" height="48" className="w-12 h-12 md:w-16 md:h-16" />
+                                                <span>Next.js</span>
+                                            </div>
+                                        </td>
+                                        <td className="text-center p-6 border border-black text-black font-medium">
+                                            <div className="flex flex-col items-center gap-2">
+                                                <img src="https://skillicons.dev/icons?i=nodejs" alt="Node.js" width="48" height="48" className="w-12 h-12 md:w-16 md:h-16" />
+                                                <span>Node.js</span>
+                                            </div>
+                                        </td>
+                                        <td className="text-center p-6 border border-black text-black font-medium">
+                                            <div className="flex flex-col items-center gap-2">
+                                                <img src="https://skillicons.dev/icons?i=express" alt="Express" width="48" height="48" className="w-12 h-12 md:w-16 md:h-16" />
+                                                <span>Express</span>
+                                            </div>
+                                        </td>
+                                        <td className="text-center p-6 border border-black text-black font-medium">
+                                            <div className="flex flex-col items-center gap-2">
+                                                <img src="https://techstack-generator.vercel.app/mysql-icon.svg" alt="MySQL" width="48" height="48" className="w-12 h-12 md:w-16 md:h-16" />
+                                                <span>MySQL</span>
+                                            </div>
+                                        </td>
+                                    </tr>
+
+                                    <tr>
+                                        <td className="text-center p-6 border border-black text-black font-medium">
+                                            <div className="flex flex-col items-center gap-2">
+                                                <img src="https://skillicons.dev/icons?i=mongodb" alt="MongoDB" width="48" height="48" className="w-12 h-12 md:w-16 md:h-16" />
+                                                <span>MongoDB</span>
+                                            </div>
+                                        </td>
+                                        <td className="text-center p-6 border border-black text-black font-medium">
+                                            <div className="flex flex-col items-center gap-2">
+                                                <img src="https://skillicons.dev/icons?i=firebase" alt="Firebase" width="48" height="48" className="w-12 h-12 md:w-16 md:h-16" />
+                                                <span>Firebase</span>
+                                            </div>
+                                        </td>
+                                        <td className="text-center p-6 border border-black text-black font-medium">
+                                            <div className="flex flex-col items-center gap-2">
+                                                <img src="https://skillicons.dev/icons?i=postman" alt="Postman" width="48" height="48" className="w-12 h-12 md:w-16 md:h-16" />
+                                                <span>Postman</span>
+                                            </div>
+                                        </td>
+                                        <td className="text-center p-6 border border-black text-black font-medium">
+                                            <div className="flex flex-col items-center gap-2">
+                                                <img src="https://techstack-generator.vercel.app/aws-icon.svg" alt="AWS" width="48" height="48" className="w-12 h-12 md:w-16 md:h-16" />
+                                                <span>AWS</span>
+                                            </div>
+                                        </td>
+                                        <td className="text-center p-6 border border-black text-black font-medium">
+                                            <div className="flex flex-col items-center gap-2">
+                                                <img src="https://skillicons.dev/icons?i=tailwind" alt="Tailwind CSS" width="48" height="48" className="w-12 h-12 md:w-16 md:h-16" />
+                                                <span>Tailwind</span>
+                                            </div>
+                                        </td>
+                                        <td className="text-center p-6 border border-black text-black font-medium">
+                                            <div className="flex flex-col items-center gap-2">
+                                                <img src="https://skillicons.dev/icons?i=graphql" alt="GraphQL" width="48" height="48" className="w-12 h-12 md:w-16 md:h-16" />
+                                                <span>GraphQL</span>
+                                            </div>
+                                        </td>
+                                        <td className="text-center p-6 border border-black text-black font-medium">
+                                            <div className="flex flex-col items-center gap-2">
+                                                <img src="https://techstack-generator.vercel.app/github-icon.svg" alt="GitHub" width="48" height="48" className="w-12 h-12 md:w-16 md:h-16" />
+                                                <span>GitHub</span>
+                                            </div>
+                                        </td>
+                                        <td className="text-center p-6 border border-black text-black font-medium">
+                                            <div className="flex flex-col items-center gap-2">
+                                                <img src="https://skillicons.dev/icons?i=git" alt="Git" width="48" height="48" className="w-12 h-12 md:w-16 md:h-16" />
+                                                <span>Git</span>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        <div className="pt-8 mt-20 border-t border-gray-200"></div>
+                    </div>
+                </div>
+
+            </section>
+            <section id="work" className="relative min-h-screen w-full flex flex-col items-center justify-center py-20 px-8 -mt-20">
+                {/* Static Background stays behind */}
+                <h2 className="flex items-center gap-2 md:gap-4 text-6xl md:text-7xl lg:text-8xl font-[family-name:var(--font-playfair)] font-bold text-black mb-12 tracking-tight">
+                    My
+                    {/* @ts-ignore */}
+                    <RotatingText
+                        texts={['Creations', 'Innovations', 'Formations', 'Endeavours']}
+                        mainClassName="bg-green-900 text-white px-2 sm:px-2 md:px-3 rounded-lg overflow-hidden py-0.5 sm:py-1 md:py-2 justify-center"
+                        staggerFrom="last"
+                        initial={{ y: "100%" }}
+                        animate={{ y: 0 }}
+                        exit={{ y: "-120%" }}
+                        staggerDuration={0.025}
+                        splitLevelClassName="overflow-hidden pb-0.5 sm:pb-1 md:pb-1"
+                        transition={{ type: "spring", damping: 30, stiffness: 400 }}
+                        rotationInterval={2000} />
+                </h2>
+
+                {/* Render Projects from Contentful or Fallback */}
+                {projects.length > 0 ? (
+                    projects.map((project, index) => (
+                        <ProjectCard
+                            key={index}
+                            videoUrl={project.videoUrl}
+                            textHeading={project.textHeading}
+                            title={project.title}
+                            description={project.description}
+                            githubUrl={project.githubUrl}
+                            backgroundColor={project.backgroundColor}
+                            showArrow={index < projects.length - 1} />
+                    ))
+                ) : null}
+
+            </section>
+        </>
+
+    );
+}
