@@ -162,6 +162,88 @@ export default function Home() {
         </div>
 
 
+        {/* Left Side Intro - Enhanced Design */}
+        <div className="absolute left-8 md:left-16 lg:left-24 top-1/2 -translate-y-1/2 z-40 max-w-2xl">
+          <div className="space-y-8">
+
+
+            {/* Main Heading with Animation */}
+            <div className="space-y-1">
+              <div className="overflow-visible pb-1">
+                <TypeAnimation
+                  sequence={[
+                    'Hey There, Its Sahil Raj Dubey',
+                    3000,
+                    'Hey There, Its Sahil Raj Dubey',
+                  ]}
+                  wrapper="h1"
+                  speed={50}
+                  className="text-6xl md:text-7xl lg:text-8xl font-bold text-white tracking-tight leading-tight"
+                  style={{ fontFamily: 'SF Pro Display, -apple-system, BlinkMacSystemFont, sans-serif', letterSpacing: '-0.02em' }}
+                  repeat={0}
+                  cursor={true}
+                />
+              </div>
+            </div>
+
+            {/* Role Tags */}
+            <div className="flex flex-wrap gap-3">
+              <span className="px-4 py-2 bg-white/5 backdrop-blur-sm border border-white/10 rounded-full text-sm text-white/80 font-medium hover:bg-white/10 transition-all duration-300" style={{ fontFamily: 'SF Pro Text, -apple-system, BlinkMacSystemFont, sans-serif' }}>
+                Full-Stack Developer
+              </span>
+              <span className="px-4 py-2 bg-white/5 backdrop-blur-sm border border-white/10 rounded-full text-sm text-white/80 font-medium hover:bg-white/10 transition-all duration-300" style={{ fontFamily: 'SF Pro Text, -apple-system, BlinkMacSystemFont, sans-serif' }}>
+                UI/UX Designer
+              </span>
+              <span className="px-4 py-2 bg-white/5 backdrop-blur-sm border border-white/10 rounded-full text-sm text-white/80 font-medium hover:bg-white/10 transition-all duration-300" style={{ fontFamily: 'SF Pro Text, -apple-system, BlinkMacSystemFont, sans-serif' }}>
+                Tech Enthusiast
+              </span>
+            </div>
+
+            {/* Description with Glass Effect */}
+            <div className="relative">
+              <div className="absolute inset-0 bg-gradient-to-r from-white/5 to-transparent rounded-2xl blur-xl"></div>
+              <p className="relative text-lg md:text-xl text-white/70 leading-relaxed max-w-xl backdrop-blur-sm bg-white/5 p-6 rounded-2xl border border-white/10" style={{ fontFamily: 'SF Pro Text, -apple-system, BlinkMacSystemFont, sans-serif' }}>
+                Crafting <span className="text-white font-semibold">elegant digital experiences</span> with modern technologies. 
+                Transforming ideas into <span className="text-white font-semibold">scalable solutions</span> that make a difference.
+              </p>
+            </div>
+
+            {/* CTA Buttons - Enhanced */}
+            <div className="flex flex-col sm:flex-row gap-4 pt-2">
+              <a
+                href="#work"
+                onClick={(e) => {
+                  e.preventDefault();
+                  document.getElementById('work')?.scrollIntoView({ behavior: 'smooth' });
+                }}
+                className="group relative px-8 py-4 bg-white text-black font-semibold rounded-full overflow-hidden transition-all duration-300 hover:scale-105 hover:shadow-2xl cursor-pointer flex items-center justify-center gap-2"
+                style={{ fontFamily: 'SF Pro Text, -apple-system, BlinkMacSystemFont, sans-serif' }}
+              >
+                <span className="relative z-10">View My Work</span>
+                <svg className="w-5 h-5 relative z-10 group-hover:translate-x-1 transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7l5 5m0 0l-5 5m5-5H6" />
+                </svg>
+                <div className="absolute inset-0 bg-gradient-to-r from-gray-100 to-white opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+              </a>
+              <a
+                href="#contact"
+                onClick={(e) => {
+                  e.preventDefault();
+                  document.getElementById('contact')?.scrollIntoView({ behavior: 'smooth' });
+                }}
+                className="group relative px-8 py-4 backdrop-blur-md bg-white/10 border-2 border-white/30 text-white font-semibold rounded-full overflow-hidden transition-all duration-300 hover:scale-105 cursor-pointer flex items-center justify-center gap-2 hover:bg-white/20"
+                style={{ fontFamily: 'SF Pro Text, -apple-system, BlinkMacSystemFont, sans-serif' }}
+              >
+                <span className="relative z-10">Get in Touch</span>
+                <svg className="w-5 h-5 relative z-10" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+                </svg>
+              </a>
+            </div>
+
+
+          </div>
+        </div>
 
 
         <div className="absolute bottom-20 left-1/2 -translate-x-1/2 z-10 w-full max-w-2xl px-4">
