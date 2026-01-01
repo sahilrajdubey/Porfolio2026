@@ -7,7 +7,7 @@ import CircularGallery from '@/components/CircularGallery';
 import RotatingText from '@/components/RotatingText';
 import TextPressure from '@/components/TextPressure';
 import ProjectCard from '@/components/ProjectCard';
-import { useState, useEffect  } from 'react';
+import { useState, useEffect } from 'react';
 import { getProjectVideos, ProjectVideo } from '@/lib/contentful';
 
 export default function Home() {
@@ -85,7 +85,7 @@ export default function Home() {
       </svg>
 
       {/* Landing Page Section */}
-      <section className="relative h-screen w-full overflow-hidden text-white selection:bg-white/20 pb-32">
+      <section className="relative h-screen w-full overflow-hidden text-white selection:bg-white/20 pb-8 md:pb-32">
 
 
         <div className="fixed inset-0 z-0 select-none bg-black transition-colors duration-700">
@@ -102,8 +102,8 @@ export default function Home() {
           </div>
 
 
-          {/* Layer 3: Overlay Image (myphoto4.png) */}
-          <div className={`absolute top-20 bottom-[-1px] right-[-20%] sm:right-[-10%] md:right-[-5%] lg:right-[-3%] w-[350px] sm:w-[450px] md:w-[650px] lg:w-[800px] transition-opacity duration-700 ease-in-out ${bgPhase === 'landing' ? 'opacity-30 sm:opacity-60 md:opacity-100' : 'opacity-0'}`}>
+          {/* Layer 3: Overlay Image (myphoto4.png) - Hidden on mobile */}
+          <div className={`hidden md:block absolute top-20 bottom-[-1px] right-[-30%] xs:right-[-25%] sm:right-[-10%] md:right-[-5%] lg:right-[-3%] w-[300px] xs:w-[350px] sm:w-[450px] md:w-[650px] lg:w-[800px] transition-opacity duration-700 ease-in-out ${bgPhase === 'landing' ? 'opacity-20 xs:opacity-30 sm:opacity-60 md:opacity-100' : 'opacity-0'}`}>
             <Image
               src="/myphoto4.png"
               alt="Overlay Photo"
@@ -133,12 +133,13 @@ export default function Home() {
         </div>
 
 
-        <div className="relative z-50 w-full px-4 py-4 md:px-8 lg:px-12 md:py-6 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 pointer-events-none">
+        <div className="relative z-50 w-full px-4 py-4 md:px-8 lg:px-12 md:py-6 flex justify-between items-center pointer-events-none">
           <div className="flex items-center gap-3 md:gap-6 text-xs sm:text-sm md:text-base font-semibold text-white pointer-events-auto tracking-tight">
             <span className="bg-gradient-to-r from-white via-gray-200 to-white bg-clip-text text-transparent font-[family-name:var(--font-inter)] tracking-wider">Sahil Raj Dubey xD</span>
           </div>
 
-          <nav className="flex items-center gap-3 sm:gap-4 md:gap-6 lg:gap-10 text-xs sm:text-sm md:text-base font-medium text-white/90 pointer-events-auto font-[family-name:var(--font-inter)] flex-wrap">
+          {/* Desktop Navigation */}
+          <nav className="hidden md:flex items-center gap-3 sm:gap-4 md:gap-6 lg:gap-10 text-xs sm:text-sm md:text-base font-medium text-white/90 pointer-events-auto font-[family-name:var(--font-inter)]">
             <a href="#about" onClick={(e) => {
               e.preventDefault();
               document.getElementById('about')?.scrollIntoView({ behavior: 'smooth' });
@@ -159,11 +160,193 @@ export default function Home() {
               document.getElementById('contact')?.scrollIntoView({ behavior: 'smooth' });
             }} className="hover:text-white hover:scale-105 transition-all duration-300 cursor-pointer tracking-wide">[chat]</a>
           </nav>
+
+          {/* Mobile Hamburger Menu */}
+          <button
+            onClick={() => {
+              const menu = document.getElementById('mobile-menu');
+              if (menu) {
+                menu.classList.toggle('translate-x-full');
+              }
+            }}
+            className="md:hidden pointer-events-auto p-2 text-white hover:bg-white/10 rounded-lg transition-all duration-300"
+            aria-label="Toggle menu"
+          >
+            <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
+            </svg>
+          </button>
+        </div>
+
+        {/* Mobile Drawer Menu */}
+        <div
+          id="mobile-menu"
+          className="md:hidden fixed top-0 right-0 h-full w-64 bg-black/95 backdrop-blur-lg z-[100] transform translate-x-full transition-transform duration-300 ease-in-out"
+        >
+          <div className="flex flex-col h-full">
+            {/* Close Button */}
+            <div className="flex justify-end p-4">
+              <button
+                onClick={() => {
+                  const menu = document.getElementById('mobile-menu');
+                  if (menu) {
+                    menu.classList.add('translate-x-full');
+                  }
+                }}
+                className="p-2 text-white hover:bg-white/10 rounded-lg transition-all duration-300"
+                aria-label="Close menu"
+              >
+                <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                </svg>
+              </button>
+            </div>
+
+            {/* Menu Items */}
+            <nav className="flex flex-col gap-6 px-8 py-4 font-[family-name:var(--font-inter)]">
+              <a
+                href="#about"
+                onClick={(e) => {
+                  e.preventDefault();
+                  document.getElementById('about')?.scrollIntoView({ behavior: 'smooth' });
+                  document.getElementById('mobile-menu')?.classList.add('translate-x-full');
+                }}
+                className="text-white/90 hover:text-white text-lg font-medium tracking-wide transition-all duration-300"
+              >
+                [about]
+              </a>
+              <a
+                href="#work"
+                onClick={(e) => {
+                  e.preventDefault();
+                  document.getElementById('work')?.scrollIntoView({ behavior: 'smooth' });
+                  document.getElementById('mobile-menu')?.classList.add('translate-x-full');
+                }}
+                className="text-white/90 hover:text-white text-lg font-medium tracking-wide transition-all duration-300"
+              >
+                [work]
+              </a>
+              <a
+                href="https://drive.google.com/uc?export=download&id=1jcJVFavLjZRXA556DFqE8P3iUBM2K1lt"
+                className="text-white/90 hover:text-white text-lg font-medium tracking-wide transition-all duration-300"
+                download
+                onClick={() => {
+                  document.getElementById('mobile-menu')?.classList.add('translate-x-full');
+                }}
+              >
+                [resume]
+              </a>
+              <a
+                href="#contact"
+                onClick={(e) => {
+                  e.preventDefault();
+                  document.getElementById('contact')?.scrollIntoView({ behavior: 'smooth' });
+                  document.getElementById('mobile-menu')?.classList.add('translate-x-full');
+                }}
+                className="text-white/90 hover:text-white text-lg font-medium tracking-wide transition-all duration-300"
+              >
+                [chat]
+              </a>
+            </nav>
+          </div>
         </div>
 
 
-        {/* Left Side Intro - Enhanced Design */}
-        <div className="absolute left-4 right-4 sm:left-6 sm:right-auto md:left-16 lg:left-24 top-1/2 -translate-y-1/2 z-40 max-w-full sm:max-w-xl md:max-w-2xl px-2 sm:px-0">
+        {/* Mobile Layout - Photo at top center in circle */}
+        <div className="md:hidden absolute inset-0 flex flex-col items-center justify-center z-40 px-4 pt-8">
+          {/* Circular Photo - Larger and Higher */}
+          <div className="w-56 h-56 sm:w-60 sm:h-60 rounded-full overflow-hidden border-4 border-white/30 shadow-2xl mb-8">
+            <Image
+              src="/myphoto4.png"
+              alt="Sahil Raj Dubey"
+              width={160}
+              height={160}
+              priority
+              className="object-cover w-full h-full"
+              quality={100}
+            />
+          </div>
+
+          {/* Content Below Photo */}
+          <div className="space-y-6 w-full max-w-md">
+            {/* Main Heading */}
+            <div className="space-y-1">
+              <div className="overflow-visible pb-1">
+                <TypeAnimation
+                  sequence={[
+                    'Hey There, Its Sahil Raj Dubey',
+                    3000,
+                    'Hey There, Its Sahil Raj Dubey',
+                  ]}
+                  wrapper="h1"
+                  speed={50}
+                  className="text-2xl xs:text-3xl font-bold text-white tracking-tight leading-tight text-center"
+                  style={{ fontFamily: 'SF Pro Display, -apple-system, BlinkMacSystemFont, sans-serif', letterSpacing: '-0.02em' }}
+                  repeat={0}
+                  cursor={true}
+                />
+              </div>
+            </div>
+
+            {/* Role Tags */}
+            <div className="flex flex-wrap gap-2 justify-center">
+              <span className="px-3 py-1.5 bg-white/5 backdrop-blur-sm border border-white/10 rounded-full text-xs text-white/80 font-medium hover:bg-white/10 transition-all duration-300" style={{ fontFamily: 'SF Pro Text, -apple-system, BlinkMacSystemFont, sans-serif' }}>
+                Full-Stack Developer
+              </span>
+              <span className="px-3 py-1.5 bg-white/5 backdrop-blur-sm border border-white/10 rounded-full text-xs text-white/80 font-medium hover:bg-white/10 transition-all duration-300" style={{ fontFamily: 'SF Pro Text, -apple-system, BlinkMacSystemFont, sans-serif' }}>
+                Data Science
+              </span>
+              <span className="px-3 py-1.5 bg-white/5 backdrop-blur-sm border border-white/10 rounded-full text-xs text-white/80 font-medium hover:bg-white/10 transition-all duration-300" style={{ fontFamily: 'SF Pro Text, -apple-system, BlinkMacSystemFont, sans-serif' }}>
+                Tech Enthusiast
+              </span>
+            </div>
+
+            {/* Description */}
+            <div className="relative">
+              <div className="absolute inset-0 bg-gradient-to-r from-white/5 to-transparent rounded-xl blur-xl"></div>
+              <p className="relative text-xs text-white/70 leading-relaxed backdrop-blur-sm bg-white/5 p-3 rounded-xl border border-white/10 text-center" style={{ fontFamily: 'SF Pro Text, -apple-system, BlinkMacSystemFont, sans-serif' }}>
+                Crafting <span className="text-white font-semibold">elegant digital experiences</span> with modern technologies.
+                Transforming ideas into <span className="text-white font-semibold">scalable solutions</span> that make a difference.
+              </p>
+            </div>
+
+            {/* CTA Buttons */}
+            <div className="flex flex-col gap-3 pt-2">
+              <a
+                href="#work"
+                onClick={(e) => {
+                  e.preventDefault();
+                  document.getElementById('work')?.scrollIntoView({ behavior: 'smooth' });
+                }}
+                className="group relative px-6 py-3 bg-white text-black font-semibold text-sm rounded-full overflow-hidden transition-all duration-300 hover:scale-105 hover:shadow-2xl cursor-pointer flex items-center justify-center gap-2"
+                style={{ fontFamily: 'SF Pro Text, -apple-system, BlinkMacSystemFont, sans-serif' }}
+              >
+                <span className="relative z-10">View My Work</span>
+                <svg className="w-4 h-4 relative z-10 group-hover:translate-x-1 transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7l5 5m0 0l-5 5m5-5H6" />
+                </svg>
+                <div className="absolute inset-0 bg-gradient-to-r from-gray-100 to-white opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+              </a>
+              <a
+                href="#contact"
+                onClick={(e) => {
+                  e.preventDefault();
+                  document.getElementById('contact')?.scrollIntoView({ behavior: 'smooth' });
+                }}
+                className="group relative px-6 py-3 backdrop-blur-md bg-white/10 border-2 border-white/30 text-white font-semibold text-sm rounded-full overflow-hidden transition-all duration-300 hover:scale-105 cursor-pointer flex items-center justify-center gap-2 hover:bg-white/20"
+                style={{ fontFamily: 'SF Pro Text, -apple-system, BlinkMacSystemFont, sans-serif' }}
+              >
+                <span className="relative z-10">Get in Touch</span>
+                <svg className="w-4 h-4 relative z-10" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+                </svg>
+              </a>
+            </div>
+          </div>
+        </div>
+
+        {/* Desktop Layout - Original design with photo on right */}
+        <div className="hidden md:block absolute left-4 right-4 sm:left-6 sm:right-auto md:left-16 lg:left-24 top-1/2 -translate-y-1/2 z-40 max-w-full sm:max-w-xl md:max-w-2xl px-2 sm:px-0">
           <div className="space-y-4 sm:space-y-6 md:space-y-8">
 
 
@@ -179,7 +362,7 @@ export default function Home() {
                   ]}
                   wrapper="h1"
                   speed={50}
-                  className="text-3xl sm:text-4xl md:text-6xl lg:text-7xl xl:text-8xl font-bold text-white tracking-tight leading-tight"
+                  className="text-2xl xs:text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-bold text-white tracking-tight leading-tight"
                   style={{ fontFamily: 'SF Pro Display, -apple-system, BlinkMacSystemFont, sans-serif', letterSpacing: '-0.02em' }}
                   repeat={0}
                   cursor={true}
@@ -193,7 +376,7 @@ export default function Home() {
                 Full-Stack Developer
               </span>
               <span className="px-3 py-1.5 sm:px-4 sm:py-2 bg-white/5 backdrop-blur-sm border border-white/10 rounded-full text-xs sm:text-sm text-white/80 font-medium hover:bg-white/10 transition-all duration-300" style={{ fontFamily: 'SF Pro Text, -apple-system, BlinkMacSystemFont, sans-serif' }}>
-                UI/UX Designer
+                Data Science
               </span>
               <span className="px-3 py-1.5 sm:px-4 sm:py-2 bg-white/5 backdrop-blur-sm border border-white/10 rounded-full text-xs sm:text-sm text-white/80 font-medium hover:bg-white/10 transition-all duration-300" style={{ fontFamily: 'SF Pro Text, -apple-system, BlinkMacSystemFont, sans-serif' }}>
                 Tech Enthusiast
@@ -201,10 +384,10 @@ export default function Home() {
             </div>
 
             {/* Description with Glass Effect */}
-            <div className="relative hidden sm:block">
+            <div className="relative">
               <div className="absolute inset-0 bg-gradient-to-r from-white/5 to-transparent rounded-2xl blur-xl"></div>
-              <p className="relative text-sm sm:text-base md:text-lg lg:text-xl text-white/70 leading-relaxed max-w-xl backdrop-blur-sm bg-white/5 p-4 sm:p-5 md:p-6 rounded-2xl border border-white/10" style={{ fontFamily: 'SF Pro Text, -apple-system, BlinkMacSystemFont, sans-serif' }}>
-                Crafting <span className="text-white font-semibold">elegant digital experiences</span> with modern technologies. 
+              <p className="relative text-xs sm:text-sm md:text-base lg:text-lg text-white/70 leading-relaxed max-w-xl backdrop-blur-sm bg-white/5 p-3 sm:p-4 md:p-5 lg:p-6 rounded-xl sm:rounded-2xl border border-white/10" style={{ fontFamily: 'SF Pro Text, -apple-system, BlinkMacSystemFont, sans-serif' }}>
+                Crafting <span className="text-white font-semibold">elegant digital experiences</span> with modern technologies.
                 Transforming ideas into <span className="text-white font-semibold">scalable solutions</span> that make a difference.
               </p>
             </div>
@@ -242,9 +425,10 @@ export default function Home() {
               </a>
             </div>
 
-           
+
           </div>
         </div>
+
 
 
         <div className="absolute bottom-20 left-1/2 -translate-x-1/2 z-10 w-full max-w-2xl px-4">
@@ -289,10 +473,10 @@ export default function Home() {
           />
 
           {/* Content Content (on top of background) */}
-          <div className="relative p-12 md:p-16 lg:p-20">
+          <div className="relative p-4 sm:p-6 md:p-12 lg:p-16 xl:p-20">
 
             {/* About Me Heading */}
-            <h2 className="flex items-center gap-2 md:gap-4 text-6xl md:text-7xl lg:text-8xl font-[family-name:var(--font-playfair)] font-bold text-black mb-12 tracking-tight">
+            <h2 className="flex flex-wrap items-center gap-2 md:gap-4 text-3xl sm:text-4xl md:text-6xl lg:text-7xl xl:text-8xl font-[family-name:var(--font-playfair)] font-bold text-black mb-6 sm:mb-8 md:mb-12 tracking-tight">
               About
               <RotatingText
                 texts={['Persona', 'Speaker', 'Myself', 'Sahil']}
@@ -372,7 +556,7 @@ export default function Home() {
                 </h3>
               </div>
             </div>
-            <div style={{ height: '600px', position: 'relative' }} className="-mx-12 md:-mx-16 lg:-mx-20 -mt-24 -mb-12 md:-mb-16 lg:-mb-10 rounded-b-lg overflow-hidden">
+            <div style={{ height: '400px', position: 'relative' }} className="sm:h-[500px] md:h-[600px] -mx-4 sm:-mx-6 md:-mx-12 lg:-mx-16 xl:-mx-20 -mt-12 sm:-mt-16 md:-mt-24 -mb-4 sm:-mb-6 md:-mb-12 lg:-mb-16 xl:-mb-10 rounded-b-lg overflow-hidden">
               <CircularGallery bend={3} textColor="#000000ff" borderRadius={0.05} scrollEase={0.02} items={undefined} />
             </div>
             <div className="pt-8 mt-9 border-t border-gray-200"></div>
@@ -380,120 +564,122 @@ export default function Home() {
               Tools & Technologies
             </h3>
             <div className="flex flex-col items-center justify-center w-full">
-              <table className="mx-auto w-full border-collapse border border-black">
-                <tbody>
-                  <tr>
-                    <td className="text-center p-6 border border-black text-black font-medium">
-                      <div className="flex flex-col items-center gap-2">
-                        <img src="https://techstack-generator.vercel.app/python-icon.svg" alt="Python" width="48" height="48" className="w-12 h-12 md:w-16 md:h-16" />
-                        <span>Python</span>
-                      </div>
-                    </td>
-                    <td className="text-center p-6 border border-black text-black font-medium">
-                      <div className="flex flex-col items-center gap-2">
-                        <img src="https://techstack-generator.vercel.app/js-icon.svg" alt="JavaScript" width="48" height="48" className="w-12 h-12 md:w-16 md:h-16" />
-                        <span>JavaScript</span>
-                      </div>
-                    </td>
-                    <td className="text-center p-6 border border-black text-black font-medium">
-                      <div className="flex flex-col items-center gap-2">
-                        <img src="https://techstack-generator.vercel.app/ts-icon.svg" alt="TypeScript" width="48" height="48" className="w-12 h-12 md:w-16 md:h-16" />
-                        <span>TypeScript</span>
-                      </div>
-                    </td>
-                    <td className="text-center p-6 border border-black text-black font-medium">
-                      <div className="flex flex-col items-center gap-2">
-                        <img src="https://techstack-generator.vercel.app/react-icon.svg" alt="React" width="48" height="48" className="w-12 h-12 md:w-16 md:h-16" />
-                        <span>React</span>
-                      </div>
-                    </td>
-                    <td className="text-center p-6 border border-black text-black font-medium">
-                      <div className="flex flex-col items-center gap-2">
-                        <img src="https://skillicons.dev/icons?i=nextjs" alt="Next.js" width="48" height="48" className="w-12 h-12 md:w-16 md:h-16" />
-                        <span>Next.js</span>
-                      </div>
-                    </td>
-                    <td className="text-center p-6 border border-black text-black font-medium">
-                      <div className="flex flex-col items-center gap-2">
-                        <img src="https://skillicons.dev/icons?i=nodejs" alt="Node.js" width="48" height="48" className="w-12 h-12 md:w-16 md:h-16" />
-                        <span>Node.js</span>
-                      </div>
-                    </td>
-                    <td className="text-center p-6 border border-black text-black font-medium">
-                      <div className="flex flex-col items-center gap-2">
-                        <img src="https://skillicons.dev/icons?i=express" alt="Express" width="48" height="48" className="w-12 h-12 md:w-16 md:h-16" />
-                        <span>Express</span>
-                      </div>
-                    </td>
-                    <td className="text-center p-6 border border-black text-black font-medium">
-                      <div className="flex flex-col items-center gap-2">
-                        <img src="https://techstack-generator.vercel.app/mysql-icon.svg" alt="MySQL" width="48" height="48" className="w-12 h-12 md:w-16 md:h-16" />
-                        <span>MySQL</span>
-                      </div>
-                    </td>
-                  </tr>
+              <div className="w-full overflow-x-auto">
+                <table className="mx-auto w-full min-w-[640px] border-collapse border border-black">
+                  <tbody>
+                    <tr>
+                      <td className="text-center p-3 sm:p-4 md:p-6 border border-black text-black font-medium">
+                        <div className="flex flex-col items-center gap-2">
+                          <img src="https://techstack-generator.vercel.app/python-icon.svg" alt="Python" width="48" height="48" className="w-8 h-8 sm:w-10 sm:h-10 md:w-12 md:h-12 lg:w-16 lg:h-16" />
+                          <span className="text-xs sm:text-sm md:text-base">Python</span>
+                        </div>
+                      </td>
+                      <td className="text-center p-3 sm:p-4 md:p-6 border border-black text-black font-medium">
+                        <div className="flex flex-col items-center gap-2">
+                          <img src="https://techstack-generator.vercel.app/js-icon.svg" alt="JavaScript" width="48" height="48" className="w-8 h-8 sm:w-10 sm:h-10 md:w-12 md:h-12 lg:w-16 lg:h-16" />
+                          <span className="text-xs sm:text-sm md:text-base">JavaScript</span>
+                        </div>
+                      </td>
+                      <td className="text-center p-3 sm:p-4 md:p-6 border border-black text-black font-medium">
+                        <div className="flex flex-col items-center gap-2">
+                          <img src="https://techstack-generator.vercel.app/ts-icon.svg" alt="TypeScript" width="48" height="48" className="w-8 h-8 sm:w-10 sm:h-10 md:w-12 md:h-12 lg:w-16 lg:h-16" />
+                          <span className="text-xs sm:text-sm md:text-base">TypeScript</span>
+                        </div>
+                      </td>
+                      <td className="text-center p-3 sm:p-4 md:p-6 border border-black text-black font-medium">
+                        <div className="flex flex-col items-center gap-2">
+                          <img src="https://techstack-generator.vercel.app/react-icon.svg" alt="React" width="48" height="48" className="w-8 h-8 sm:w-10 sm:h-10 md:w-12 md:h-12 lg:w-16 lg:h-16" />
+                          <span className="text-xs sm:text-sm md:text-base">React</span>
+                        </div>
+                      </td>
+                      <td className="text-center p-3 sm:p-4 md:p-6 border border-black text-black font-medium">
+                        <div className="flex flex-col items-center gap-2">
+                          <img src="https://skillicons.dev/icons?i=nextjs" alt="Next.js" width="48" height="48" className="w-8 h-8 sm:w-10 sm:h-10 md:w-12 md:h-12 lg:w-16 lg:h-16" />
+                          <span className="text-xs sm:text-sm md:text-base">Next.js</span>
+                        </div>
+                      </td>
+                      <td className="text-center p-3 sm:p-4 md:p-6 border border-black text-black font-medium">
+                        <div className="flex flex-col items-center gap-2">
+                          <img src="https://skillicons.dev/icons?i=nodejs" alt="Node.js" width="48" height="48" className="w-8 h-8 sm:w-10 sm:h-10 md:w-12 md:h-12 lg:w-16 lg:h-16" />
+                          <span className="text-xs sm:text-sm md:text-base">Node.js</span>
+                        </div>
+                      </td>
+                      <td className="text-center p-3 sm:p-4 md:p-6 border border-black text-black font-medium">
+                        <div className="flex flex-col items-center gap-2">
+                          <img src="https://skillicons.dev/icons?i=express" alt="Express" width="48" height="48" className="w-8 h-8 sm:w-10 sm:h-10 md:w-12 md:h-12 lg:w-16 lg:h-16" />
+                          <span className="text-xs sm:text-sm md:text-base">Express</span>
+                        </div>
+                      </td>
+                      <td className="text-center p-3 sm:p-4 md:p-6 border border-black text-black font-medium">
+                        <div className="flex flex-col items-center gap-2">
+                          <img src="https://techstack-generator.vercel.app/mysql-icon.svg" alt="MySQL" width="48" height="48" className="w-8 h-8 sm:w-10 sm:h-10 md:w-12 md:h-12 lg:w-16 lg:h-16" />
+                          <span className="text-xs sm:text-sm md:text-base">MySQL</span>
+                        </div>
+                      </td>
+                    </tr>
 
-                  <tr>
-                    <td className="text-center p-6 border border-black text-black font-medium">
-                      <div className="flex flex-col items-center gap-2">
-                        <img src="https://skillicons.dev/icons?i=mongodb" alt="MongoDB" width="48" height="48" className="w-12 h-12 md:w-16 md:h-16" />
-                        <span>MongoDB</span>
-                      </div>
-                    </td>
-                    <td className="text-center p-6 border border-black text-black font-medium">
-                      <div className="flex flex-col items-center gap-2">
-                        <img src="https://skillicons.dev/icons?i=firebase" alt="Firebase" width="48" height="48" className="w-12 h-12 md:w-16 md:h-16" />
-                        <span>Firebase</span>
-                      </div>
-                    </td>
-                    <td className="text-center p-6 border border-black text-black font-medium">
-                      <div className="flex flex-col items-center gap-2">
-                        <img src="https://skillicons.dev/icons?i=postman" alt="Postman" width="48" height="48" className="w-12 h-12 md:w-16 md:h-16" />
-                        <span>Postman</span>
-                      </div>
-                    </td>
-                    <td className="text-center p-6 border border-black text-black font-medium">
-                      <div className="flex flex-col items-center gap-2">
-                        <img src="https://techstack-generator.vercel.app/aws-icon.svg" alt="AWS" width="48" height="48" className="w-12 h-12 md:w-16 md:h-16" />
-                        <span>AWS</span>
-                      </div>
-                    </td>
-                    <td className="text-center p-6 border border-black text-black font-medium">
-                      <div className="flex flex-col items-center gap-2">
-                        <img src="https://skillicons.dev/icons?i=tailwind" alt="Tailwind CSS" width="48" height="48" className="w-12 h-12 md:w-16 md:h-16" />
-                        <span>Tailwind</span>
-                      </div>
-                    </td>
-                    <td className="text-center p-6 border border-black text-black font-medium">
-                      <div className="flex flex-col items-center gap-2">
-                        <img src="https://skillicons.dev/icons?i=graphql" alt="GraphQL" width="48" height="48" className="w-12 h-12 md:w-16 md:h-16" />
-                        <span>GraphQL</span>
-                      </div>
-                    </td>
-                    <td className="text-center p-6 border border-black text-black font-medium">
-                      <div className="flex flex-col items-center gap-2">
-                        <img src="https://techstack-generator.vercel.app/github-icon.svg" alt="GitHub" width="48" height="48" className="w-12 h-12 md:w-16 md:h-16" />
-                        <span>GitHub</span>
-                      </div>
-                    </td>
-                    <td className="text-center p-6 border border-black text-black font-medium">
-                      <div className="flex flex-col items-center gap-2">
-                        <img src="https://skillicons.dev/icons?i=git" alt="Git" width="48" height="48" className="w-12 h-12 md:w-16 md:h-16" />
-                        <span>Git</span>
-                      </div>
-                    </td>
-                  </tr>
-                </tbody>
-              </table>
+                    <tr>
+                      <td className="text-center p-3 sm:p-4 md:p-6 border border-black text-black font-medium">
+                        <div className="flex flex-col items-center gap-2">
+                          <img src="https://skillicons.dev/icons?i=mongodb" alt="MongoDB" width="48" height="48" className="w-8 h-8 sm:w-10 sm:h-10 md:w-12 md:h-12 lg:w-16 lg:h-16" />
+                          <span className="text-xs sm:text-sm md:text-base">MongoDB</span>
+                        </div>
+                      </td>
+                      <td className="text-center p-3 sm:p-4 md:p-6 border border-black text-black font-medium">
+                        <div className="flex flex-col items-center gap-2">
+                          <img src="https://skillicons.dev/icons?i=firebase" alt="Firebase" width="48" height="48" className="w-8 h-8 sm:w-10 sm:h-10 md:w-12 md:h-12 lg:w-16 lg:h-16" />
+                          <span className="text-xs sm:text-sm md:text-base">Firebase</span>
+                        </div>
+                      </td>
+                      <td className="text-center p-3 sm:p-4 md:p-6 border border-black text-black font-medium">
+                        <div className="flex flex-col items-center gap-2">
+                          <img src="https://skillicons.dev/icons?i=postman" alt="Postman" width="48" height="48" className="w-8 h-8 sm:w-10 sm:h-10 md:w-12 md:h-12 lg:w-16 lg:h-16" />
+                          <span className="text-xs sm:text-sm md:text-base">Postman</span>
+                        </div>
+                      </td>
+                      <td className="text-center p-3 sm:p-4 md:p-6 border border-black text-black font-medium">
+                        <div className="flex flex-col items-center gap-2">
+                          <img src="https://techstack-generator.vercel.app/aws-icon.svg" alt="AWS" width="48" height="48" className="w-8 h-8 sm:w-10 sm:h-10 md:w-12 md:h-12 lg:w-16 lg:h-16" />
+                          <span className="text-xs sm:text-sm md:text-base">AWS</span>
+                        </div>
+                      </td>
+                      <td className="text-center p-3 sm:p-4 md:p-6 border border-black text-black font-medium">
+                        <div className="flex flex-col items-center gap-2">
+                          <img src="https://skillicons.dev/icons?i=tailwind" alt="Tailwind CSS" width="48" height="48" className="w-8 h-8 sm:w-10 sm:h-10 md:w-12 md:h-12 lg:w-16 lg:h-16" />
+                          <span className="text-xs sm:text-sm md:text-base">Tailwind</span>
+                        </div>
+                      </td>
+                      <td className="text-center p-3 sm:p-4 md:p-6 border border-black text-black font-medium">
+                        <div className="flex flex-col items-center gap-2">
+                          <img src="https://skillicons.dev/icons?i=graphql" alt="GraphQL" width="48" height="48" className="w-8 h-8 sm:w-10 sm:h-10 md:w-12 md:h-12 lg:w-16 lg:h-16" />
+                          <span className="text-xs sm:text-sm md:text-base">GraphQL</span>
+                        </div>
+                      </td>
+                      <td className="text-center p-3 sm:p-4 md:p-6 border border-black text-black font-medium">
+                        <div className="flex flex-col items-center gap-2">
+                          <img src="https://techstack-generator.vercel.app/github-icon.svg" alt="GitHub" width="48" height="48" className="w-8 h-8 sm:w-10 sm:h-10 md:w-12 md:h-12 lg:w-16 lg:h-16" />
+                          <span className="text-xs sm:text-sm md:text-base">GitHub</span>
+                        </div>
+                      </td>
+                      <td className="text-center p-3 sm:p-4 md:p-6 border border-black text-black font-medium">
+                        <div className="flex flex-col items-center gap-2">
+                          <img src="https://skillicons.dev/icons?i=git" alt="Git" width="48" height="48" className="w-8 h-8 sm:w-10 sm:h-10 md:w-12 md:h-12 lg:w-16 lg:h-16" />
+                          <span className="text-xs sm:text-sm md:text-base">Git</span>
+                        </div>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
             </div>
             <div className="pt-8 mt-20 border-t border-gray-200"></div>
           </div>
         </div>
 
       </section>
-      <section id="work" className="relative min-h-screen w-full flex flex-col items-center justify-center py-20 px-8 -mt-5">
+      <section id="work" className="relative min-h-screen w-full flex flex-col items-center justify-center py-12 md:py-20 px-8 -mt-10">
         {/* Static Background stays behind */}
-        <h2 className="flex items-center gap-2 md:gap-4 text-6xl md:text-7xl lg:text-8xl font-[family-name:var(--font-playfair)] font-bold text-black mb-5 tracking-tight">
+        <h2 className="flex flex-wrap items-center gap-2 md:gap-4 text-4xl sm:text-5xl md:text-6xl lg:text-7xl xl:text-8xl font-[family-name:var(--font-playfair)] font-bold text-black mb-8 tracking-tight">
           My
           <RotatingText
             texts={['Creations', 'Innovations', 'Formations', 'Endeavours']}
@@ -530,7 +716,7 @@ export default function Home() {
 
       {/* Contact Section */}
       <section id="contact" className="relative min-h-screen w-full flex flex-col items-center justify-center py-20 px-8 -mt-20">
-        <h2 className="flex items-center gap-2 md:gap-4 text-6xl md:text-7xl lg:text-8xl font-[family-name:var(--font-playfair)] font-bold text-black mb-12 tracking-tight">
+        <h2 className="flex flex-wrap items-center gap-2 md:gap-4 text-3xl sm:text-4xl md:text-6xl lg:text-7xl xl:text-8xl font-[family-name:var(--font-playfair)] font-bold text-black mb-6 sm:mb-8 md:mb-12 tracking-tight">
           Let's
 
           <RotatingText
@@ -566,7 +752,7 @@ export default function Home() {
           />
 
           {/* Contact Content */}
-          <div className="relative p-12 md:p-16 lg:p-20">
+          <div className="relative p-4 sm:p-6 md:p-12 lg:p-16 xl:p-20">
             <div className="relative p-4 md:p-8 lg:p-10">
               {/* Text Pressure Heading */}
               <div className="flex flex-col items-center justify-center w-full mb-6">
@@ -600,7 +786,7 @@ export default function Home() {
 
             <div className="text-center mb-12">
               <p className="text-gray-600 max-w-2xl mx-auto leading-relaxed text-lg md:text-xl font-[family-name:var(--font-inter)] font-light mb-8">
-                Have a project in mind or just want to say hi? I'd love to hear from you. 
+                Have a project in mind or just want to say hi? I'd love to hear from you.
                 Let's turn ideas into reality together.
               </p>
             </div>
@@ -667,7 +853,7 @@ export default function Home() {
             {/* Call to Action */}
             <div className="text-center mt-16">
               <p className="text-gray-800 font-[family-name:var(--font-inter)] text-xl mb-8 max-w-2xl mx-auto">
-                Whether you have a question, a project idea, or just want to connect, feel free to reach out. 
+                Whether you have a question, a project idea, or just want to connect, feel free to reach out.
                 I'm always open to discussing new opportunities and collaborations.
               </p>
               <a
