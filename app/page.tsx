@@ -268,7 +268,7 @@ export default function Home() {
           </div>
 
           {/* Content Below Photo */}
-          <div className="space-y-6 w-full max-w-md">
+          <div className="space-y-4 w-full max-w-md">
             {/* Main Heading */}
             <div className="space-y-1">
               <div className="overflow-visible pb-1">
@@ -289,14 +289,14 @@ export default function Home() {
             </div>
 
             {/* Role Tags */}
-            <div className="flex flex-wrap gap-2 justify-center">
-              <span className="px-3 py-1.5 bg-white/5 backdrop-blur-sm border border-white/10 rounded-full text-xs text-white/80 font-medium hover:bg-white/10 transition-all duration-300" style={{ fontFamily: 'SF Pro Text, -apple-system, BlinkMacSystemFont, sans-serif' }}>
+            <div className="flex flex-nowrap gap-1.5 justify-center">
+              <span className="px-2 py-1 bg-white/5 backdrop-blur-sm border border-white/10 rounded-full text-[10px] text-white/80 font-medium hover:bg-white/10 transition-all duration-300 whitespace-nowrap" style={{ fontFamily: 'SF Pro Text, -apple-system, BlinkMacSystemFont, sans-serif' }}>
                 Full-Stack Developer
               </span>
-              <span className="px-3 py-1.5 bg-white/5 backdrop-blur-sm border border-white/10 rounded-full text-xs text-white/80 font-medium hover:bg-white/10 transition-all duration-300" style={{ fontFamily: 'SF Pro Text, -apple-system, BlinkMacSystemFont, sans-serif' }}>
+              <span className="px-2 py-1 bg-white/5 backdrop-blur-sm border border-white/10 rounded-full text-[10px] text-white/80 font-medium hover:bg-white/10 transition-all duration-300 whitespace-nowrap" style={{ fontFamily: 'SF Pro Text, -apple-system, BlinkMacSystemFont, sans-serif' }}>
                 Data Science
               </span>
-              <span className="px-3 py-1.5 bg-white/5 backdrop-blur-sm border border-white/10 rounded-full text-xs text-white/80 font-medium hover:bg-white/10 transition-all duration-300" style={{ fontFamily: 'SF Pro Text, -apple-system, BlinkMacSystemFont, sans-serif' }}>
+              <span className="px-2 py-1 bg-white/5 backdrop-blur-sm border border-white/10 rounded-full text-[10px] text-white/80 font-medium hover:bg-white/10 transition-all duration-300 whitespace-nowrap" style={{ fontFamily: 'SF Pro Text, -apple-system, BlinkMacSystemFont, sans-serif' }}>
                 Tech Enthusiast
               </span>
             </div>
