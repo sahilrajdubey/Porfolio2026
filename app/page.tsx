@@ -91,8 +91,8 @@ export default function Home() {
 
 
         <div className="fixed inset-0 z-0 select-none transition-colors duration-700 min-h-screen w-full">
-          {/* Layer 1: Background Landing Image (bgimage.png) - Desktop Only */}
-          <div className={`hidden md:block absolute inset-0 transition-opacity duration-700 ease-in-out ${bgPhase === 'landing' ? 'opacity-100' : 'opacity-0'}`}>
+          {/* Layer 1: Background Landing Image (bgimage.png) - Desktop Only - Semi-transparent to show video */}
+          <div className={`hidden md:block absolute inset-0 transition-opacity duration-700 ease-in-out ${bgPhase === 'landing' ? 'opacity-50' : 'opacity-0'}`}>
             <Image
               src="/bgimage.png"
               alt="Background Landing"
@@ -115,8 +115,8 @@ export default function Home() {
             />
           </div>
 
-          {/* Layer 5: Main Image (image.jpg) - Lower opacity for better video visibility */}
-          <div className={`absolute inset-0 transition-opacity duration-700 ease-in-out ${bgPhase === 'main' ? 'opacity-35' : 'opacity-0'}`}>
+          {/* Layer 5: Main Image (image.jpg) - For both mobile and desktop - Full opacity */}
+          <div className={`absolute inset-0 transition-opacity duration-700 ease-in-out ${bgPhase === 'main' ? 'opacity-100' : 'opacity-0'}`}>
             <Image
               src="/image.jpg"
               alt="Background Main"
