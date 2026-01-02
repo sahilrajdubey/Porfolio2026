@@ -90,7 +90,7 @@ export default function Home() {
       <section className="relative h-screen w-full overflow-hidden text-white selection:bg-white/20 pb-8 md:pb-32">
 
 
-        <div className="fixed inset-0 z-0 select-none bg-black transition-colors duration-700 min-h-screen w-full">
+        <div className="fixed inset-0 z-0 select-none transition-colors duration-700 min-h-screen w-full">
           {/* Layer 1: Background Landing Image (bgimage.png) - Desktop Only */}
           <div className={`hidden md:block absolute inset-0 transition-opacity duration-700 ease-in-out ${bgPhase === 'landing' ? 'opacity-100' : 'opacity-0'}`}>
             <Image
@@ -102,23 +102,6 @@ export default function Home() {
               quality={100}
             />
           </div>
-
-          {/* Layer 1b: Background Video (bgvdo.mp4) - For all screens */}
-          {isMounted && (
-            <div className={`absolute inset-0 transition-opacity duration-700 ease-in-out ${bgPhase === 'landing' ? 'opacity-60 md:opacity-30' : 'opacity-0'}`}>
-              <video
-                className="object-cover w-full h-full min-h-screen"
-                autoPlay
-                muted
-                loop
-                playsInline
-                suppressHydrationWarning
-              >
-                <source src="/bgvdo.mp4" type="video/mp4" />
-              </video>
-            </div>
-          )}
-
 
           {/* Layer 3: Overlay Image (myphoto4.png) - Hidden on mobile */}
           <div className={`hidden md:block absolute top-20 bottom-[-1px] right-[-30%] xs:right-[-25%] sm:right-[-10%] md:right-[-5%] lg:right-[-3%] xl:right-0 2xl:right-[5%] w-[300px] xs:w-[350px] sm:w-[450px] md:w-[650px] lg:w-[750px] xl:w-[850px] 2xl:w-[900px] max-w-[50vw] transition-opacity duration-700 ease-in-out ${bgPhase === 'landing' ? 'opacity-20 xs:opacity-30 sm:opacity-60 md:opacity-100' : 'opacity-0'}`}>
@@ -132,13 +115,8 @@ export default function Home() {
             />
           </div>
 
-          {/* Layer 4: Black Background (Actually just showing the parent bg-black when others are transparent, but we can be explicit or just rely on opacity) */}
-          {/* If both images are opacity-0, the background color of the parent div (bg-black) shows through.
-              Since bgPhase 'black' sets both images to opacity 0, we get the black background. 
-          */}
-
-          {/* Layer 5: Main Image (image.jpg) */}
-          <div className={`absolute inset-0 transition-opacity duration-700 ease-in-out ${bgPhase === 'main' ? 'opacity-100' : 'opacity-0'}`}>
+          {/* Layer 5: Main Image (image.jpg) - Lower opacity for better video visibility */}
+          <div className={`absolute inset-0 transition-opacity duration-700 ease-in-out ${bgPhase === 'main' ? 'opacity-35' : 'opacity-0'}`}>
             <Image
               src="/image.jpg"
               alt="Background Main"
