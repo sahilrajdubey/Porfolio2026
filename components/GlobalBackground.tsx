@@ -19,11 +19,16 @@ export default function GlobalBackground() {
       setIsVideoLoaded(true);
     });
 
-    // Hide video after landing page
+    // Hide video only after fully scrolling past About section start
     const handleScroll = () => {
+      const aboutSection = document.getElementById('about');
+      if (!aboutSection) return;
+      
       const scrollY = window.scrollY;
-      // Hide video when scrolled past 80% of viewport height
-      if (scrollY > window.innerHeight * 0.8) {
+      const aboutTop = aboutSection.offsetTop;
+      
+      // Keep video visible until we're well into the About section
+      if (scrollY > aboutTop + 200) {
         setShowVideo(false);
       } else {
         setShowVideo(true);
@@ -40,18 +45,17 @@ export default function GlobalBackground() {
 
   if (!isMounted) return null;
 
-  // Don't render video component if not on landing
-  if (!showVideo) return null;
-
   return (
     <>
-      {/* Global Background Video - Only visible on landing page */}
+      {/* Global Background Video - Visible on landing and during transition */}
       <div 
-        className="fixed inset-0 z-[-1] w-full h-full overflow-hidden"
+        className="fixed inset-0 w-full overflow-hidden"
         style={{
+          zIndex: -1,
           opacity: showVideo ? 1 : 0,
           transition: 'opacity 0.7s ease-in-out',
-          pointerEvents: 'none'
+          pointerEvents: 'none',
+          height: '100vh'
         }}
       >
         <video
@@ -64,7 +68,8 @@ export default function GlobalBackground() {
           suppressHydrationWarning
           style={{
             opacity: isVideoLoaded ? 1 : 0,
-            transition: 'opacity 0.5s ease-in-out'
+            transition: 'opacity 0.5s ease-in-out',
+            height: '100vh'
           }}
         >
           <source src="/bgvdo.mp4" type="video/mp4" />
@@ -79,7 +84,7 @@ export default function GlobalBackground() {
 
       {/* Fallback loading state */}
       {!isVideoLoaded && showVideo && (
-        <div className="fixed inset-0 z-[-1] bg-black" />
+        <div className="fixed inset-0 bg-black" style={{ zIndex: -1 }} />
       )}
     </>
   );
