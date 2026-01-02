@@ -90,7 +90,7 @@ export default function Home() {
       <section className="relative h-screen w-full overflow-hidden text-white selection:bg-white/20 pb-8 md:pb-32">
 
 
-        <div className="fixed inset-0 z-0 select-none bg-black transition-colors duration-700 h-full w-full">
+        <div className="fixed inset-0 z-0 select-none bg-black transition-colors duration-700 min-h-screen w-full">
           {/* Layer 1: Background Landing Image (bgimage.png) - Desktop Only */}
           <div className={`hidden md:block absolute inset-0 transition-opacity duration-700 ease-in-out ${bgPhase === 'landing' ? 'opacity-100' : 'opacity-0'}`}>
             <Image
@@ -106,7 +106,7 @@ export default function Home() {
           {/* Layer 1b: Background Video (bgvdo.mp4) - Mobile Only */}
           <div className={`md:hidden absolute inset-0 transition-opacity duration-700 ease-in-out ${bgPhase === 'landing' ? 'opacity-60' : 'opacity-0'}`}>
             <video
-              className="object-cover w-full h-full"
+              className="object-cover w-full h-full min-h-screen"
               autoPlay
               muted
               loop
