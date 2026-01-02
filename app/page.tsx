@@ -253,14 +253,14 @@ export default function Home() {
 
 
         {/* Mobile Layout - Photo at top center in circle */}
-        <div className="md:hidden absolute inset-0 flex flex-col items-center justify-center z-40 px-4 pt-8">
+        <div className="md:hidden absolute inset-0 flex flex-col items-center justify-center z-40 px-4 pt-1">
           {/* Circular Photo - Larger and Higher */}
-          <div className="w-56 h-56 sm:w-60 sm:h-60 rounded-full overflow-hidden border-4 border-white/30 shadow-2xl mb-8">
+          <div className="w-65 h-65 sm:w-60 sm:h-60 rounded-full overflow-hidden border-4 border-white/30 shadow-2xl mb-8">
             <Image
-              src="/myphoto4.png"
+              src="/wpbgmp.png"
               alt="Sahil Raj Dubey"
-              width={160}
-              height={160}
+              width={800}
+              height={800}
               priority
               className="object-cover w-full h-full"
               quality={100}
@@ -274,9 +274,9 @@ export default function Home() {
               <div className="overflow-visible pb-1">
                 <TypeAnimation
                   sequence={[
-                    'Hey There, Its Sahil Raj Dubey',
+                    'Hey There, It\'s Sahil Raj Dubey',
                     3000,
-                    'Hey There, Its Sahil Raj Dubey',
+                    'Hey There, It\'s Sahil Raj Dubey',
                   ]}
                   wrapper="h1"
                   speed={50}
