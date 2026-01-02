@@ -348,13 +348,15 @@ class App {
       borderRadius = 0,
       font = 'bold 30px Figtree',
       scrollSpeed = 2,
-      scrollEase = 0.05
+      scrollEase = 0.05,
+      autoScroll = false,
+      autoScrollSpeed = 0.5
     }: any = {}
   ) {
     document.documentElement.classList.remove('no-js');
     this.container = container;
     this.scrollSpeed = scrollSpeed;
-    this.scroll = { ease: scrollEase, current: 0, target: 0, last: 0 };
+    this.scroll = { ease: scrollEase, current: 0, target: 0, last: 0, autoScroll, autoScrollSpeed };
     this.onCheckDebounce = debounce(this.onCheck, 200);
     this.createRenderer();
     this.createCamera();
@@ -421,6 +423,10 @@ class App {
     this.isDown = true;
     this.scroll.position = this.scroll.current;
     this.start = e.touches ? e.touches[0].clientX : e.clientX;
+    // Pause auto-scroll when user interacts
+    if (this.scroll.autoScroll) {
+      this.scroll.autoScrollPaused = true;
+    }
   }
   onTouchMove(e: any) {
     if (!this.isDown) return;
@@ -431,11 +437,24 @@ class App {
   onTouchUp() {
     this.isDown = false;
     this.onCheck();
+    // Resume auto-scroll after a delay
+    if (this.scroll.autoScroll && this.scroll.autoScrollPaused) {
+      setTimeout(() => {
+        this.scroll.autoScrollPaused = false;
+      }, 3000);
+    }
   }
   onWheel(e: any) {
     const delta = e.deltaY || e.wheelDelta || e.detail;
     this.scroll.target += (delta > 0 ? this.scrollSpeed : -this.scrollSpeed) * 0.2;
     this.onCheckDebounce();
+    // Pause auto-scroll when user scrolls
+    if (this.scroll.autoScroll) {
+      this.scroll.autoScrollPaused = true;
+      setTimeout(() => {
+        this.scroll.autoScrollPaused = false;
+      }, 3000);
+    }
   }
   onCheck() {
     if (!this.medias || !this.medias[0]) return;
@@ -462,6 +481,11 @@ class App {
     }
   }
   update() {
+    // Auto-scroll if enabled and not paused
+    if (this.scroll.autoScroll && !this.scroll.autoScrollPaused) {
+      this.scroll.target += this.scroll.autoScrollSpeed;
+    }
+    
     this.scroll.current = lerp(this.scroll.current, this.scroll.target, this.scroll.ease);
     const direction = this.scroll.current > this.scroll.last ? 'right' : 'left';
     if (this.medias) {
@@ -512,6 +536,8 @@ interface CircularGalleryProps {
   font?: string;
   scrollSpeed?: number;
   scrollEase?: number;
+  autoScroll?: boolean;
+  autoScrollSpeed?: number;
 }
 
 export default function CircularGallery({
@@ -521,15 +547,17 @@ export default function CircularGallery({
   borderRadius = 0.05,
   font = 'bold 30px Figtree',
   scrollSpeed = 2,
-  scrollEase = 0.05
+  scrollEase = 0.05,
+  autoScroll = false,
+  autoScrollSpeed = 0.5
 }: CircularGalleryProps) {
   const containerRef = useRef<HTMLDivElement>(null);
   useEffect(() => {
     if (!containerRef.current) return;
-    const app = new App(containerRef.current, { items, bend, textColor, borderRadius, font, scrollSpeed, scrollEase });
+    const app = new App(containerRef.current, { items, bend, textColor, borderRadius, font, scrollSpeed, scrollEase, autoScroll, autoScrollSpeed });
     return () => {
       app.destroy();
     };
-  }, [items, bend, textColor, borderRadius, font, scrollSpeed, scrollEase]);
+  }, [items, bend, textColor, borderRadius, font, scrollSpeed, scrollEase, autoScroll, autoScrollSpeed]);
   return <div className="w-full h-full overflow-hidden cursor-grab active:cursor-grabbing" ref={containerRef} />;
 }

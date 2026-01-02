@@ -103,22 +103,25 @@ export default function Home() {
             />
           </div>
 
-          {/* Layer 1b: Background Video (bgvdo.mp4) - Mobile Only */}
-          <div className={`md:hidden absolute inset-0 transition-opacity duration-700 ease-in-out ${bgPhase === 'landing' ? 'opacity-60' : 'opacity-0'}`}>
-            <video
-              className="object-cover w-full h-full min-h-screen"
-              autoPlay
-              muted
-              loop
-              playsInline
-            >
-              <source src="/bgvdo.mp4" type="video/mp4" />
-            </video>
-          </div>
+          {/* Layer 1b: Background Video (bgvdo.mp4) - For all screens */}
+          {isMounted && (
+            <div className={`absolute inset-0 transition-opacity duration-700 ease-in-out ${bgPhase === 'landing' ? 'opacity-60 md:opacity-30' : 'opacity-0'}`}>
+              <video
+                className="object-cover w-full h-full min-h-screen"
+                autoPlay
+                muted
+                loop
+                playsInline
+                suppressHydrationWarning
+              >
+                <source src="/bgvdo.mp4" type="video/mp4" />
+              </video>
+            </div>
+          )}
 
 
           {/* Layer 3: Overlay Image (myphoto4.png) - Hidden on mobile */}
-          <div className={`hidden md:block absolute top-20 bottom-[-1px] right-[-30%] xs:right-[-25%] sm:right-[-10%] md:right-[-5%] lg:right-[-3%] w-[300px] xs:w-[350px] sm:w-[450px] md:w-[650px] lg:w-[800px] transition-opacity duration-700 ease-in-out ${bgPhase === 'landing' ? 'opacity-20 xs:opacity-30 sm:opacity-60 md:opacity-100' : 'opacity-0'}`}>
+          <div className={`hidden md:block absolute top-20 bottom-[-1px] right-[-30%] xs:right-[-25%] sm:right-[-10%] md:right-[-5%] lg:right-[-3%] xl:right-0 2xl:right-[5%] w-[300px] xs:w-[350px] sm:w-[450px] md:w-[650px] lg:w-[750px] xl:w-[850px] 2xl:w-[900px] max-w-[50vw] transition-opacity duration-700 ease-in-out ${bgPhase === 'landing' ? 'opacity-20 xs:opacity-30 sm:opacity-60 md:opacity-100' : 'opacity-0'}`}>
             <Image
               src="/myphoto4.png"
               alt="Overlay Photo"
@@ -287,19 +290,25 @@ export default function Home() {
             {/* Main Heading */}
             <div className="space-y-1">
               <div className="overflow-visible pb-1">
-                <TypeAnimation
-                  sequence={[
-                    'Hey There, It\'s Sahil Raj Dubey',
-                    3000,
-                    'Hey There, It\'s Sahil Raj Dubey',
-                  ]}
-                  wrapper="h1"
-                  speed={50}
-                  className="text-2xl xs:text-3xl font-bold text-white tracking-tight leading-tight text-center"
-                  style={{ fontFamily: 'SF Pro Display, -apple-system, BlinkMacSystemFont, sans-serif', letterSpacing: '-0.02em' }}
-                  repeat={0}
-                  cursor={true}
-                />
+                {isMounted ? (
+                  <TypeAnimation
+                    sequence={[
+                      'Hey There, It\'s Sahil Raj Dubey',
+                      3000,
+                      'Hey There, It\'s Sahil Raj Dubey',
+                    ]}
+                    wrapper="h1"
+                    speed={50}
+                    className="text-2xl xs:text-3xl font-bold text-white tracking-tight leading-tight text-center"
+                    style={{ fontFamily: 'SF Pro Display, -apple-system, BlinkMacSystemFont, sans-serif', letterSpacing: '-0.02em' }}
+                    repeat={0}
+                    cursor={true}
+                  />
+                ) : (
+                  <h1 className="text-2xl xs:text-3xl font-bold text-white tracking-tight leading-tight text-center" style={{ fontFamily: 'SF Pro Display, -apple-system, BlinkMacSystemFont, sans-serif', letterSpacing: '-0.02em' }}>
+                    Hey There, It's Sahil Raj Dubey
+                  </h1>
+                )}
               </div>
             </div>
 
@@ -361,39 +370,55 @@ export default function Home() {
         </div>
 
         {/* Desktop Layout - Original design with photo on right */}
-        <div className="hidden md:block absolute left-4 right-4 sm:left-6 sm:right-auto md:left-16 lg:left-24 top-1/2 -translate-y-1/2 z-40 max-w-full sm:max-w-xl md:max-w-2xl px-2 sm:px-0">
-          <div className="space-y-4 sm:space-y-6 md:space-y-8">
+        <div className="hidden md:block absolute left-4 right-4 sm:left-6 sm:right-auto md:left-12 lg:left-16 xl:left-20 2xl:left-24 top-1/2 -translate-y-1/2 z-40 max-w-full sm:max-w-xl md:max-w-2xl lg:max-w-3xl xl:max-w-4xl px-2 sm:px-0">
+          <div className="space-y-4 sm:space-y-6 md:space-y-8 xl:space-y-10">
 
 
 
             {/* Main Heading with Animation */}
-            <div className="space-y-1">
+            <div className="space-y-2">
               <div className="overflow-visible pb-1">
-                <TypeAnimation
-                  sequence={[
-                    'Hey There, Its Sahil Raj Dubey',
-                    3000,
-                    'Hey There, Its Sahil Raj Dubey',
-                  ]}
-                  wrapper="h1"
-                  speed={50}
-                  className="text-2xl xs:text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-bold text-white tracking-tight leading-tight"
-                  style={{ fontFamily: 'SF Pro Display, -apple-system, BlinkMacSystemFont, sans-serif', letterSpacing: '-0.02em' }}
-                  repeat={0}
-                  cursor={true}
-                />
+                {isMounted ? (
+                  <div className="flex flex-col gap-1">
+                    <span className="text-2xl xs:text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl 2xl:text-8xl font-bold text-white tracking-tight leading-tight block" style={{ fontFamily: 'SF Pro Display, -apple-system, BlinkMacSystemFont, sans-serif', letterSpacing: '-0.02em' }}>
+                      Hey There,
+                    </span>
+                    <TypeAnimation
+                      sequence={[
+                        "It's Sahil Raj Dubey",
+                        3000,
+                        "It's Sahil Raj Dubey",
+                      ]}
+                      wrapper="span"
+                      speed={50}
+                      className="text-2xl xs:text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl 2xl:text-8xl font-bold text-white tracking-tight leading-tight block"
+                      style={{ fontFamily: 'SF Pro Display, -apple-system, BlinkMacSystemFont, sans-serif', letterSpacing: '-0.02em' }}
+                      repeat={0}
+                      cursor={true}
+                    />
+                  </div>
+                ) : (
+                  <div className="flex flex-col gap-1">
+                    <span className="text-2xl xs:text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl 2xl:text-8xl font-bold text-white tracking-tight leading-tight block" style={{ fontFamily: 'SF Pro Display, -apple-system, BlinkMacSystemFont, sans-serif', letterSpacing: '-0.02em' }}>
+                      Hey There,
+                    </span>
+                    <span className="text-2xl xs:text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl 2xl:text-8xl font-bold text-white tracking-tight leading-tight block" style={{ fontFamily: 'SF Pro Display, -apple-system, BlinkMacSystemFont, sans-serif', letterSpacing: '-0.02em' }}>
+                      It's Sahil Raj Dubey
+                    </span>
+                  </div>
+                )}
               </div>
             </div>
 
             {/* Role Tags */}
-            <div className="flex flex-wrap gap-2 sm:gap-3">
-              <span className="px-3 py-1.5 sm:px-4 sm:py-2 bg-white/5 backdrop-blur-sm border border-white/10 rounded-full text-xs sm:text-sm text-white/80 font-medium hover:bg-white/10 transition-all duration-300" style={{ fontFamily: 'SF Pro Text, -apple-system, BlinkMacSystemFont, sans-serif' }}>
+            <div className="flex flex-wrap gap-2 sm:gap-3 xl:gap-4">
+              <span className="px-3 py-1.5 sm:px-4 sm:py-2 xl:px-5 xl:py-3 bg-white/5 backdrop-blur-sm border border-white/10 rounded-full text-xs sm:text-sm xl:text-base 2xl:text-lg text-white/80 font-medium hover:bg-white/10 transition-all duration-300" style={{ fontFamily: 'SF Pro Text, -apple-system, BlinkMacSystemFont, sans-serif' }}>
                 Full-Stack Developer
               </span>
-              <span className="px-3 py-1.5 sm:px-4 sm:py-2 bg-white/5 backdrop-blur-sm border border-white/10 rounded-full text-xs sm:text-sm text-white/80 font-medium hover:bg-white/10 transition-all duration-300" style={{ fontFamily: 'SF Pro Text, -apple-system, BlinkMacSystemFont, sans-serif' }}>
+              <span className="px-3 py-1.5 sm:px-4 sm:py-2 xl:px-5 xl:py-3 bg-white/5 backdrop-blur-sm border border-white/10 rounded-full text-xs sm:text-sm xl:text-base 2xl:text-lg text-white/80 font-medium hover:bg-white/10 transition-all duration-300" style={{ fontFamily: 'SF Pro Text, -apple-system, BlinkMacSystemFont, sans-serif' }}>
                 Data Science
               </span>
-              <span className="px-3 py-1.5 sm:px-4 sm:py-2 bg-white/5 backdrop-blur-sm border border-white/10 rounded-full text-xs sm:text-sm text-white/80 font-medium hover:bg-white/10 transition-all duration-300" style={{ fontFamily: 'SF Pro Text, -apple-system, BlinkMacSystemFont, sans-serif' }}>
+              <span className="px-3 py-1.5 sm:px-4 sm:py-2 xl:px-5 xl:py-3 bg-white/5 backdrop-blur-sm border border-white/10 rounded-full text-xs sm:text-sm xl:text-base 2xl:text-lg text-white/80 font-medium hover:bg-white/10 transition-all duration-300" style={{ fontFamily: 'SF Pro Text, -apple-system, BlinkMacSystemFont, sans-serif' }}>
                 Tech Enthusiast
               </span>
             </div>
@@ -401,25 +426,25 @@ export default function Home() {
             {/* Description with Glass Effect */}
             <div className="relative">
               <div className="absolute inset-0 bg-gradient-to-r from-white/5 to-transparent rounded-2xl blur-xl"></div>
-              <p className="relative text-xs sm:text-sm md:text-base lg:text-lg text-white/70 leading-relaxed max-w-xl backdrop-blur-sm bg-white/5 p-3 sm:p-4 md:p-5 lg:p-6 rounded-xl sm:rounded-2xl border border-white/10" style={{ fontFamily: 'SF Pro Text, -apple-system, BlinkMacSystemFont, sans-serif' }}>
+              <p className="relative text-xs sm:text-sm md:text-base lg:text-lg xl:text-xl 2xl:text-2xl text-white/70 leading-relaxed max-w-xl xl:max-w-2xl backdrop-blur-sm bg-white/5 p-3 sm:p-4 md:p-5 lg:p-6 xl:p-8 rounded-xl sm:rounded-2xl border border-white/10" style={{ fontFamily: 'SF Pro Text, -apple-system, BlinkMacSystemFont, sans-serif' }}>
                 Crafting <span className="text-white font-semibold">elegant digital experiences</span> with modern technologies.
                 Transforming ideas into <span className="text-white font-semibold">scalable solutions</span> that make a difference.
               </p>
             </div>
 
             {/* CTA Buttons - Enhanced */}
-            <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 pt-2">
+            <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 xl:gap-5 pt-2">
               <a
                 href="#work"
                 onClick={(e) => {
                   e.preventDefault();
                   document.getElementById('work')?.scrollIntoView({ behavior: 'smooth' });
                 }}
-                className="group relative px-6 py-3 sm:px-8 sm:py-4 bg-white text-black font-semibold text-sm sm:text-base rounded-full overflow-hidden transition-all duration-300 hover:scale-105 hover:shadow-2xl cursor-pointer flex items-center justify-center gap-2"
+                className="group relative px-6 py-3 sm:px-8 sm:py-4 xl:px-10 xl:py-5 bg-white text-black font-semibold text-sm sm:text-base xl:text-lg rounded-full overflow-hidden transition-all duration-300 hover:scale-105 hover:shadow-2xl cursor-pointer flex items-center justify-center gap-2"
                 style={{ fontFamily: 'SF Pro Text, -apple-system, BlinkMacSystemFont, sans-serif' }}
               >
                 <span className="relative z-10">View My Work</span>
-                <svg className="w-4 h-4 sm:w-5 sm:h-5 relative z-10 group-hover:translate-x-1 transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <svg className="w-4 h-4 sm:w-5 sm:h-5 xl:w-6 xl:h-6 relative z-10 group-hover:translate-x-1 transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7l5 5m0 0l-5 5m5-5H6" />
                 </svg>
                 <div className="absolute inset-0 bg-gradient-to-r from-gray-100 to-white opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
@@ -430,11 +455,11 @@ export default function Home() {
                   e.preventDefault();
                   document.getElementById('contact')?.scrollIntoView({ behavior: 'smooth' });
                 }}
-                className="group relative px-6 py-3 sm:px-8 sm:py-4 backdrop-blur-md bg-white/10 border-2 border-white/30 text-white font-semibold text-sm sm:text-base rounded-full overflow-hidden transition-all duration-300 hover:scale-105 cursor-pointer flex items-center justify-center gap-2 hover:bg-white/20"
+                className="group relative px-6 py-3 sm:px-8 sm:py-4 xl:px-10 xl:py-5 backdrop-blur-md bg-white/10 border-2 border-white/30 text-white font-semibold text-sm sm:text-base xl:text-lg rounded-full overflow-hidden transition-all duration-300 hover:scale-105 cursor-pointer flex items-center justify-center gap-2 hover:bg-white/20"
                 style={{ fontFamily: 'SF Pro Text, -apple-system, BlinkMacSystemFont, sans-serif' }}
               >
                 <span className="relative z-10">Get in Touch</span>
-                <svg className="w-4 h-4 sm:w-5 sm:h-5 relative z-10" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <svg className="w-4 h-4 sm:w-5 sm:h-5 xl:w-6 xl:h-6 relative z-10" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
                 </svg>
               </a>
@@ -491,7 +516,7 @@ export default function Home() {
           <div className="relative p-4 sm:p-6 md:p-12 lg:p-16 xl:p-20">
 
             {/* About Me Heading */}
-            <h2 className="flex flex-wrap items-center gap-2 md:gap-4 text-3xl sm:text-4xl md:text-6xl lg:text-7xl xl:text-8xl font-[family-name:var(--font-playfair)] font-bold text-black mb-6 sm:mb-8 md:mb-12 tracking-tight">
+            <h2 className="flex flex-wrap items-center gap-2 md:gap-4 text-3xl sm:text-4xl md:text-6xl lg:text-7xl xl:text-8xl 2xl:text-9xl font-[family-name:var(--font-playfair)] font-bold text-black mb-6 sm:mb-8 md:mb-12 tracking-tight">
               About
               <RotatingText
                 texts={['Persona', 'Speaker', 'Myself', 'Sahil']}
@@ -527,55 +552,63 @@ export default function Home() {
 
               {/* Skills or additional sections can go here */}
               <div className="pt-8 mt-8 border-t border-gray-200">
-                <h3 className="text-3xl font-[family-name:var(--font-playfair)] font-semibold text-black mb-6">
+                <h3 className="text-2xl md:text-3xl xl:text-4xl 2xl:text-5xl font-[family-name:var(--font-playfair)] font-semibold text-black mb-6">
                   What I Do
                 </h3>
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                  <div className="p-6 bg-gray-50 rounded-lg">
-                    <h4 className="text-xl font-semibold mb-2 text-black">Frontend Development</h4>
-                    <p className="text-gray-700">Building responsive and interactive user interfaces</p>
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-6 xl:gap-8">
+                  <div className="p-6 xl:p-8 bg-gray-50 rounded-lg">
+                    <h4 className="text-lg md:text-xl xl:text-2xl font-semibold mb-2 text-black">Frontend Development</h4>
+                    <p className="text-sm md:text-base xl:text-lg text-gray-700">Building responsive and interactive user interfaces</p>
                   </div>
-                  <div className="p-6 bg-gray-50 rounded-lg">
-                    <h4 className="text-xl font-semibold mb-2 text-black">UI/UX Design</h4>
-                    <p className="text-gray-700">Creating beautiful and intuitive user experiences</p>
+                  <div className="p-6 xl:p-8 bg-gray-50 rounded-lg">
+                    <h4 className="text-lg md:text-xl xl:text-2xl font-semibold mb-2 text-black">UI/UX Design</h4>
+                    <p className="text-sm md:text-base xl:text-lg text-gray-700">Creating beautiful and intuitive user experiences</p>
                   </div>
-                  <div className="p-6 bg-gray-50 rounded-lg">
-                    <h4 className="text-xl font-semibold mb-2 text-black">Backend Development</h4>
-                    <p className="text-gray-700">Building fast, secure, scalable server systems</p>
+                  <div className="p-6 xl:p-8 bg-gray-50 rounded-lg">
+                    <h4 className="text-lg md:text-xl xl:text-2xl font-semibold mb-2 text-black">Backend Development</h4>
+                    <p className="text-sm md:text-base xl:text-lg text-gray-700">Building fast, secure, scalable server systems</p>
                   </div>
-                  <div className="p-6 bg-gray-50 rounded-lg">
-                    <h4 className="text-xl font-semibold mb-2 text-black">Data Science</h4>
-                    <p className="text-gray-700">Transforming raw data into actionable insights</p>
+                  <div className="p-6 xl:p-8 bg-gray-50 rounded-lg">
+                    <h4 className="text-lg md:text-xl xl:text-2xl font-semibold mb-2 text-black">Data Science</h4>
+                    <p className="text-sm md:text-base xl:text-lg text-gray-700">Transforming raw data into actionable insights</p>
                   </div>
-                  <div className="p-6 bg-gray-50 rounded-lg">
-                    <h4 className="text-xl font-semibold mb-2 text-black">Machine Learning</h4>
-                    <p className="text-gray-700">Creating intelligent models that learn patterns</p>
+                  <div className="p-6 xl:p-8 bg-gray-50 rounded-lg">
+                    <h4 className="text-lg md:text-xl xl:text-2xl font-semibold mb-2 text-black">Machine Learning</h4>
+                    <p className="text-sm md:text-base xl:text-lg text-gray-700">Creating intelligent models that learn patterns</p>
                   </div>
-                  <div className="p-6 bg-gray-50 rounded-lg">
-                    <h4 className="text-xl font-semibold mb-2 text-black">Database Management</h4>
-                    <p className="text-gray-700">Structuring optimized and reliable data storage</p>
+                  <div className="p-6 xl:p-8 bg-gray-50 rounded-lg">
+                    <h4 className="text-lg md:text-xl xl:text-2xl font-semibold mb-2 text-black">Database Management</h4>
+                    <p className="text-sm md:text-base xl:text-lg text-gray-700">Structuring optimized and reliable data storage</p>
                   </div>
-                  <div className="p-6 bg-gray-50 rounded-lg">
-                    <h4 className="text-xl font-semibold mb-2 text-black">API Development</h4>
-                    <p className="text-gray-700">Designing seamless and efficient data flows</p>
+                  <div className="p-6 xl:p-8 bg-gray-50 rounded-lg">
+                    <h4 className="text-lg md:text-xl xl:text-2xl font-semibold mb-2 text-black">API Development</h4>
+                    <p className="text-sm md:text-base xl:text-lg text-gray-700">Designing seamless and efficient data flows</p>
                   </div>
-                  <div className="p-6 bg-gray-50 rounded-lg">
-                    <h4 className="text-xl font-semibold mb-2 text-black">Team Collaboration</h4>
-                    <p className="text-gray-700">Working cohesively to build robust solutions</p>
+                  <div className="p-6 xl:p-8 bg-gray-50 rounded-lg">
+                    <h4 className="text-lg md:text-xl xl:text-2xl font-semibold mb-2 text-black">Team Collaboration</h4>
+                    <p className="text-sm md:text-base xl:text-lg text-gray-700">Working cohesively to build robust solutions</p>
                   </div>
 
                 </div>
                 <div className="pt-20 mt-8 border-t border-gray-200"></div>
-                <h3 className="text-3xl font-[family-name:var(--font-playfair)] font-semibold text-black mb-6">
+                <h3 className="text-2xl md:text-3xl xl:text-4xl 2xl:text-5xl font-[family-name:var(--font-playfair)] font-semibold text-black mb-6">
                   Certifications
                 </h3>
               </div>
             </div>
             <div style={{ height: '400px', position: 'relative' }} className="sm:h-[500px] md:h-[600px] -mx-4 sm:-mx-6 md:-mx-12 lg:-mx-16 xl:-mx-20 -mt-12 sm:-mt-16 md:-mt-24 -mb-4 sm:-mb-6 md:-mb-12 lg:-mb-16 xl:-mb-10 rounded-b-lg overflow-hidden">
-              <CircularGallery bend={3} textColor="#000000ff" borderRadius={0.05} scrollEase={0.02} items={undefined} />
+              <CircularGallery 
+                bend={3} 
+                textColor="#000000ff" 
+                borderRadius={0.05} 
+                scrollEase={0.02} 
+                autoScroll={true}
+                autoScrollSpeed={0.3}
+                items={undefined} 
+              />
             </div>
             <div className="pt-8 mt-9 border-t border-gray-200"></div>
-            <h3 className="text-3xl font-[family-name:var(--font-playfair)] font-semibold text-black mb-6">
+            <h3 className="text-2xl md:text-3xl xl:text-4xl 2xl:text-5xl font-[family-name:var(--font-playfair)] font-semibold text-black mb-6">
               Tools & Technologies
             </h3>
             <div className="flex flex-col items-center justify-center w-full">
@@ -694,7 +727,7 @@ export default function Home() {
       </section>
       <section id="work" className="relative min-h-screen w-full flex flex-col items-center justify-center py-12 md:py-20 px-8 -mt-10">
         {/* Static Background stays behind */}
-        <h2 className="flex flex-wrap items-center gap-2 md:gap-4 text-4xl sm:text-5xl md:text-6xl lg:text-7xl xl:text-8xl font-[family-name:var(--font-playfair)] font-bold text-black mb-8 tracking-tight">
+        <h2 className="flex flex-wrap items-center gap-2 md:gap-4 text-4xl sm:text-5xl md:text-6xl lg:text-7xl xl:text-8xl 2xl:text-9xl font-[family-name:var(--font-playfair)] font-bold text-black mb-8 md:mb-12 xl:mb-16 tracking-tight">
           My
           <RotatingText
             texts={['Creations', 'Innovations', 'Formations', 'Endeavours']}
@@ -731,7 +764,7 @@ export default function Home() {
 
       {/* Contact Section */}
       <section id="contact" className="relative min-h-screen w-full flex flex-col items-center justify-center py-20 px-8 -mt-20">
-        <h2 className="flex flex-wrap items-center gap-2 md:gap-4 text-3xl sm:text-4xl md:text-6xl lg:text-7xl xl:text-8xl font-[family-name:var(--font-playfair)] font-bold text-black mb-6 sm:mb-8 md:mb-12 tracking-tight">
+        <h2 className="flex flex-wrap items-center gap-2 md:gap-4 text-3xl sm:text-4xl md:text-6xl lg:text-7xl xl:text-8xl 2xl:text-9xl font-[family-name:var(--font-playfair)] font-bold text-black mb-6 sm:mb-8 md:mb-12 xl:mb-16 tracking-tight">
           Let's
 
           <RotatingText
