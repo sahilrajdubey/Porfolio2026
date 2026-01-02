@@ -88,7 +88,7 @@ export default function Home() {
       <section className="relative h-screen w-full overflow-hidden text-white selection:bg-white/20 pb-8 md:pb-32">
 
 
-        <div className="fixed inset-0 z-0 select-none bg-black transition-colors duration-700">
+        <div className="fixed inset-0 z-0 select-none bg-black transition-colors duration-700 h-full w-full">
           {/* Layer 1: Background Landing Image (bgimage.png) */}
           <div className={`absolute inset-0 transition-opacity duration-700 ease-in-out ${bgPhase === 'landing' ? 'opacity-100' : 'opacity-0'}`}>
             <Image
