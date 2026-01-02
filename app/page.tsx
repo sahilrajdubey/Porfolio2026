@@ -12,9 +12,11 @@ import { getProjectVideos, ProjectVideo } from '@/lib/contentful';
 
 export default function Home() {
   const [bgPhase, setBgPhase] = useState<'landing' | 'black' | 'main'>('landing');
+  const [isMounted, setIsMounted] = useState(false);
   const [projects, setProjects] = useState<ProjectVideo[]>([]);
 
   useEffect(() => {
+    setIsMounted(true);
     const handleScroll = () => {
       const aboutSection = document.getElementById('about');
       if (!aboutSection) return;
@@ -89,8 +91,8 @@ export default function Home() {
 
 
         <div className="fixed inset-0 z-0 select-none bg-black transition-colors duration-700 h-full w-full">
-          {/* Layer 1: Background Landing Image (bgimage.png) */}
-          <div className={`absolute inset-0 transition-opacity duration-700 ease-in-out ${bgPhase === 'landing' ? 'opacity-100' : 'opacity-0'}`}>
+          {/* Layer 1: Background Landing Image (bgimage.png) - Desktop Only */}
+          <div className={`hidden md:block absolute inset-0 transition-opacity duration-700 ease-in-out ${bgPhase === 'landing' ? 'opacity-100' : 'opacity-0'}`}>
             <Image
               src="/bgimage.png"
               alt="Background Landing"
@@ -99,6 +101,19 @@ export default function Home() {
               className="object-cover object-center"
               quality={100}
             />
+          </div>
+
+          {/* Layer 1b: Background Video (bgvdo.mp4) - Mobile Only */}
+          <div className={`md:hidden absolute inset-0 transition-opacity duration-700 ease-in-out ${bgPhase === 'landing' ? 'opacity-60' : 'opacity-0'}`}>
+            <video
+              className="object-cover w-full h-full"
+              autoPlay
+              muted
+              loop
+              playsInline
+            >
+              <source src="/bgvdo.mp4" type="video/mp4" />
+            </video>
           </div>
 
 
