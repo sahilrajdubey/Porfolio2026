@@ -118,7 +118,7 @@ export default function Home() {
           {/* Layer 5: Main Image (image.jpg) - For both mobile and desktop - Full opacity */}
           <div className={`absolute inset-0 transition-opacity duration-700 ease-in-out ${bgPhase === 'main' ? 'opacity-100' : 'opacity-0'}`}>
             <Image
-              src="/image.jpg"
+              src="/image1.jpg"
               alt="Background Main"
               fill
               priority
