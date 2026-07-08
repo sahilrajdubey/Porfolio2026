@@ -145,7 +145,7 @@ export default function Home() {
               document.getElementById('work')?.scrollIntoView({ behavior: 'smooth' });
             }} className="hover:text-white hover:scale-105 transition-all duration-300 cursor-pointer tracking-wide">[work]</a>
             <a
-              href="https://drive.google.com/uc?export=download&id=1jcJVFavLjZRXA556DFqE8P3iUBM2K1lt"
+              href="https://drive.google.com/file/d/1ivsSZyNZ1rBZe_8Zz6ZKNhbNxlHOnMrp/view?usp=sharing"
               className="hover:text-white hover:scale-105 transition-all duration-300 cursor-pointer tracking-wide"
               download
             >
