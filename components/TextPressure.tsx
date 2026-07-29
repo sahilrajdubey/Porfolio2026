@@ -23,9 +23,8 @@ export interface TextPressureProps {
 
 const TextPressure: React.FC<TextPressureProps> = ({
   text = 'Compressa',
-  fontFamily = 'Compressa VF',
-  // This font is just an example, you should not use it in commercial projects.
-  fontUrl = 'https://res.cloudinary.com/dr6lvwubh/raw/upload/v1529908256/CompressaPRO-GX.woff2',
+  fontFamily = 'Roboto Flex',
+  fontUrl = '',
 
   width = true,
   weight = true,
@@ -165,13 +164,14 @@ const TextPressure: React.FC<TextPressureProps> = ({
   }, [width, weight, italic, alpha, chars.length]);
 
   return (
-    <div ref={containerRef} className="relative w-full h-full overflow-hidden bg-transparent">
+    <div ref={containerRef} className="relative w-full h-auto overflow-visible bg-transparent">
       <style>{`
+        ${fontUrl ? `
         @font-face {
           font-family: '${fontFamily}';
           src: url('${fontUrl}');
           font-style: normal;
-        }
+        }` : ''}
         .stroke span {
           position: relative;
           color: ${textColor};

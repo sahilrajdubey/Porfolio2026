@@ -32,6 +32,12 @@ export default function RootLayout({
   return (
     <html lang="en" className="scroll-smooth">
       <head>
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
+        <link
+          href="https://fonts.googleapis.com/css2?family=Roboto+Flex:opsz,wdth,wght@8..144,25..151,100..900&display=swap"
+          rel="stylesheet"
+        />
         <link rel="preload" href="/bgvdo.mp4" as="video" type="video/mp4" fetchPriority="high" />
         <link rel="preload" href="/bgimage.png" as="image" fetchPriority="high" />
       </head>

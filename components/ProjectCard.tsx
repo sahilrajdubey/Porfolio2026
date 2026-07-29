@@ -63,12 +63,13 @@ export default function ProjectCard({
             <div className="w-full max-w-[800px] relative px-2 sm:px-4">
               <TextPressure
                 text={textHeading}
+                fontFamily="Roboto Flex"
                 flex={true}
                 alpha={false}
                 stroke={false}
                 width={true}
                 weight={true}
-                italic={true}
+                italic={false}
                 textColor="#0b3c19ff"
                 strokeColor="#490303ff"
                 minFontSize={24}
