@@ -32,7 +32,8 @@ export default function RootLayout({
   return (
     <html lang="en" className="scroll-smooth">
       <head>
-        <link rel="preload" href="/bgvdo.mp4" as="video" type="video/mp4" />
+        <link rel="preload" href="/bgvdo.mp4" as="video" type="video/mp4" fetchPriority="high" />
+        <link rel="preload" href="/bgimage.png" as="image" fetchPriority="high" />
       </head>
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased relative`}
