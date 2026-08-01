@@ -271,9 +271,9 @@ export default function Home() {
                 {isMounted ? (
                   <TypeAnimation
                     sequence={[
-                      'Hey There, It\'s Kundan Pandey',
+                      'Hey There, It\'s Sahil Raj Dubey',
                       3000,
-                      'Hey There, It\'s Kundan Pandey',
+                      'Hey There, It\'s Sahil Raj Dubey',
                     ]}
                     wrapper="h1"
                     speed={50}
